@@ -13,7 +13,18 @@ https://www.npmjs.com/package/big-integer
 
 ###Aufgabe 2:
   1. Der Algorithmus terminiert.
-  2.
+  2. Hat einen Messbaren output.
+
+  Der extended GCD besagt, dass anstatt immer wieder den größeren Wert d (Rest) voneinander abzuziehen eine schnellere Operation (das Teilen des größeren durch den kleineren Wert) ausgeführt wird um eben diese Schritte zu vermeiden.
+
+  // alt und braucht mehr iterationen
+  for(var i=0; i<4; i++)
+    130-30
+  Ergebnis -> 10
+
+  // eine Operation
+  130 - ((int) 130/4)
+  Ergebnis -> 10
 
 ###Aufgabe 3:
   Sprache - node.js
