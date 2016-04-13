@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
  
-int fibonacci(int n){
+int unsigned long fibonacci(int n){
 	if(n == 0){
 		return 0;
 	}
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
 	t = clock();
 	
 
-	printf("%d\n", fibonacci(f));
+	printf("%lu\n", fibonacci(f));
 	
 	
 	t = clock() - t;
