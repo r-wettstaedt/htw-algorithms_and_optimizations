@@ -25,13 +25,16 @@ int calc (int a, int b) {
         c = d - q * c;
         d = c_c;
 
-        u_d = u_c;
-        u_c = u_d - q * u_c;
+        const int u_c_t = u_c;
+        const int v_c_t = v_c;
 
-        v_d = v_c;
+        u_c = u_d - q * u_c;
         v_c = v_d - q * v_c;
 
-        printf("i: %d\tq: %d\tc: %d\td: %d\n", i, q, c, d);
+        u_d = u_c_t;
+        v_d = v_c_t;
+
+        // printf("i: %d\tq: %d\tc: %d\td: %d\n", i, q, c, d);
     }
 
     printf("d: %d\tu_d: %d\tv_d: %d\n", d, u_d, v_d);
@@ -64,12 +67,14 @@ int main (int argc, char *argv[]) {
 
     struct timeval tv;
     gettimeofday(&tv, NULL);
-    const double start = tv.tv_usec;
+    unsigned long start = 1000000 * tv.tv_sec + tv.tv_usec;
 
     const int steps = calc(a, b);
 
     gettimeofday(&tv, NULL);
-    printf("Done in %gμs\n", tv.tv_usec - start);
+    unsigned long end = 1000000 * tv.tv_sec + tv.tv_usec;
+
+    printf("Done in %gμs\n", end - start);
     printf("Required iterations %d\n", steps);
 
     return 0;

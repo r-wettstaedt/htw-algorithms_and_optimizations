@@ -8,7 +8,7 @@
 
 int fibonacci (int N, int i, mpz_t n_1, mpz_t n_2) {
     mpz_t n;
-    mpz_init (n);
+    mpz_init(n);
     mpz_add(n, n_1, n_2);
 
     if (i == 1 || i == 2) mpz_set_str(n, "1", 10);
@@ -36,13 +36,15 @@ int main (int argc, char *argv[]) {
 
     struct timeval tv;
     gettimeofday(&tv, NULL);
-    const double start = tv.tv_usec;
+    unsigned long start = 1000000 * tv.tv_sec + tv.tv_usec;
 
     const int steps = fibonacci(N, 0, n_1, n_2);
     printf("\n");
 
     gettimeofday(&tv, NULL);
-    printf("Done in %gμs\n", tv.tv_usec - start);
+    unsigned long end = 1000000 * tv.tv_sec + tv.tv_usec;
+
+    printf("Done in %luμs\n", end - start);
     printf("Required iterations %d\n", steps);
 
 

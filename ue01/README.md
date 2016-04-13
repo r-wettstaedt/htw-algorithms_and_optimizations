@@ -12,7 +12,7 @@
 ####Insbesondere: Terminiert der Algorithmus?
 * Ja, wenn c == 0
 * Dies geschieht in jedem Fall, da c in jeder Iteration einer kleiner werdenden Zahl zugewiesen wird
-* Durch die Abrundung mit der floor() Funktion, handelt es sich außerdem immer um ganzzahlige, sodass das das Erreichen von 0 unvermeidbar ist
+* Durch die Abrundung mit der floor() Funktion, handelt es sich außerdem immer um ganze Zahlen, sodass das das Erreichen von 0 unvermeidbar ist
 
 ####Wieso berechnet er den gcd?
 * Weil, Baum
@@ -28,42 +28,42 @@
 
 ####GCD
     a: 12   b: 3
-    d: 3    u_d: 1  v_d: 0
+    d: 3    u_d: 0  v_d: 1
     Done in 6μs
     Required iterations 2
 
     -----------------------
 
     a: 16   b: 12
-    d: 4    u_d: 0  v_d: 0
+    d: 4    u_d: 1  v_d: -1
     Done in 9μs
     Required iterations 3
 
     -----------------------
 
     a: 120000   b: 3000
-    d: 3000 u_d: 1  v_d: 0
+    d: 3000 u_d: 0  v_d: 1
     Done in 7μs
     Required iterations 2
 
     -----------------------
 
     a: 39088168 b: 1016
-    d: 8    u_d: 0  v_d: 0
+    d: 8    u_d: 33 v_d: -1269596
     Done in 7μs
     Required iterations 9
 
     -----------------------
 
     a: 89   b: 55           (consecutive fibonacci numbers)
-    d: 1    u_d: 0  v_d: 0
+    d: 1    u_d: -21 v_d: 34
     Done in 6μs
     Required iterations 10
 
     -----------------------
 
     a: 9227465  b: 14930352 (consecutive fibonacci numbers)
-    d: 1    u_d: 0  v_d: 0
+    d: 1    u_d: -5702887   v_d: 3524578
     Done in 7μs
     Required iterations 34
 
