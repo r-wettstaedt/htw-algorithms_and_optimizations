@@ -6,15 +6,15 @@ https://www.npmjs.com/package/big-integer
 
 ###Aufgabe 1:
   Sprache - node.js
-  Aufruf - "node gcd.js <a> <b>"
+  Aufruf - "node gcd.js <numberA> <numberB>"
 
 ###Aufgabe 2:
   1. Der Algorithmus terminiert.
-  2. 
+  2.
 
 ###Aufgabe 3:
   Sprache - node.js
-  Aufruf - "node fibonaci.js <n>"
+  Aufruf - "node fibonaci.js <numberN>"
 
 ###Aufgabe 4:
 
