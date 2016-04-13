@@ -113,6 +113,3 @@ tags
 
 # Debug files
 *.dSYM/
-
-#npm_folder
-node_modules/*
