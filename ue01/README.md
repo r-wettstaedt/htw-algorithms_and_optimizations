@@ -50,3 +50,6 @@
 #### Conclusion
     Die Komplexität von dem rekursiven Fibonacci-Algorithmus ist exponentiell (O(2N/2)), d.h. mir der Eingabewert steigert auch die CPU-Zeit und die Anzahl von Iterationen (Anzahl von Iterationen = n)
     Bei dem extendedGCD algorithmus bleibt die Zeit konstant und die Anzahl von der Iterationen ändert sich.
+    
+### 5. Fibonacci in Zeit O(lg n)
+        ./fibonacciLogN <number N>
