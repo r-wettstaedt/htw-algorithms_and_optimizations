@@ -37,7 +37,10 @@ function extendedGCD(a, b) {
   }
 }
 
-var a = bigInt(93)
-var b = bigInt("32942305")
-
-console.log(extendedGCD(a,b))
+try {
+  var a = bigInt(process.argv[2])
+  var b = bigInt(process.argv[3])
+  console.log(extendedGCD(a,b))
+} catch(e) {
+  throw 'Input type error 0'
+}
