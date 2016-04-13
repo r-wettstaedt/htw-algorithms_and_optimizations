@@ -18,7 +18,6 @@ function extendedGCD(a, b) {
 
   while(c.notEquals(0)) {
     counter++
-    console.log('Iteration:', counter)
 
     var q = bigInt(d.divide(c))
 

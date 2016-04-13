@@ -1,21 +1,30 @@
 // import
 var bigInt = require("big-integer")
+var startTime
 
 function fibonaciRec(callNum, maxCallNum, old, current) {
-  if(callNum.greaterOrEquals(maxCallNum)) return
+  if(callNum.greaterOrEquals(maxCallNum)) {
+    var endTime = getCurrentTimeInMicros()
+    return {
+      fibonaci: current.toString(),
+      time: endTime.minus(startTime).toString(),
+      iterations: maxCallNum.toString()
+    }
+  }
   var newOld = current
   var newCurrent = old.plus(current)
-  console.log('Call number: ', callNum.toString(), 'fibonaci', newCurrent.toString())
-  fibonaciRec(callNum.plus(1), maxCallNum, newOld, newCurrent)
+  return fibonaciRec(callNum.plus(1), maxCallNum, newOld, newCurrent)
 }
 
 function fibonaci(maxCallNum) {
-  fibonaciRec(bigInt.zero,maxCallNum, bigInt.zero, bigInt.one)
+  // cpu time
+  startTime = getCurrentTimeInMicros()
+  console.log(fibonaciRec(bigInt.zero,maxCallNum, bigInt.zero, bigInt.one))
 }
 
-try {
-  var maxCallNum = bigInt(process.argv[2])
-  fibonaci(maxCallNum)
-} catch(e) {
-  throw 'Input error 0 ' + process.argv[2]
+var getCurrentTimeInMicros = function() {
+  return bigInt(process.hrtime()[0] * 1000000).plus(bigInt(process.hrtime()[1]).divide(1000))
 }
+
+var maxCallNum = bigInt(process.argv[2])
+fibonaci(maxCallNum)

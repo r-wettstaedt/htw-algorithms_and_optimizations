@@ -6,14 +6,15 @@ https://www.npmjs.com/package/big-integer
 
 ###Aufgabe 1:
   Sprache - node.js
-  Aufruf - "node gcd.js a b"
+  Aufruf - "node gcd.js <a> <b>"
 
 ###Aufgabe 2:
-  TODO ...
+  1. Der Algorithmus terminiert.
+  2. 
 
 ###Aufgabe 3:
   Sprache - node.js
-  Aufruf - "node fibonaci.js n"
+  Aufruf - "node fibonaci.js <n>"
 
 ###Aufgabe 4:
 
@@ -57,3 +58,45 @@ https://www.npmjs.com/package/big-integer
     d: 1    u_d: 0  v_d: 0
     Done in 3799μs
     Required iterations 34
+
+####Fibonacci
+    N: 3
+    Done in 16030μs
+    Required iterations 3
+
+    -----------------------
+
+    N: 12
+    Done in 14741μs
+    Required iterations 12
+
+    -----------------------
+
+    N: 30
+    Done in 16549μs
+    Required iterations 30
+
+    -----------------------
+
+    N: 300
+    Done in 16558μs
+    Required iterations 300
+
+    -----------------------
+
+    N: 3000
+    Done in 27511μs
+    Required iterations 3000
+
+    -----------------------
+
+    N: 30000
+    Done in 309770μs
+    Required iterations 30000
+
+####Conclusion
+Trotz erhöhter Komplexität der Eingabewerte für den extendedGCD, bleibt die Dauer der CPU Rechenzeit relativ konstant. Die Anzahl der Iterationen hängt dabei nicht von der Größe der Eingabewerte ab, sondern eher von der Größe ihres ggT.
+
+Im Gegensatz dazu steht der Fibonacci Algorithmus, welcher bei erhöhtem Eingabewert linear sowohl die Anzahl der Iterationen als auch die CPU Zeit steigert.
+
+Zu beachten ist auch die viel längere Rechenzeit in node.js im Vergleich zur Rechenzeit in C.
