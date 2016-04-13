@@ -15,7 +15,9 @@
 * Durch die Abrundung mit der floor() Funktion, handelt es sich außerdem immer um ganze Zahlen, sodass das das Erreichen von 0 unvermeidbar ist
 
 ####Wieso berechnet er den gcd?
-* Weil, Baum
+* Beim extendedGCD wird, anders als beim normalen GCD, mit dem Restwert aus der Division zwischen den beiden Zahlen weitergerechnet
+* Mit diesem Vorgehen fällt eine mehrfache Subtraktion der Zahlen weg
+* Em Ende ist der größte gemeinsame Teiler die Zahl, die nicht 0 ist
 
 
 ###3. Schreiben Sie eine rekursive Funktion für die Fibonacci-Zahlen Fn
