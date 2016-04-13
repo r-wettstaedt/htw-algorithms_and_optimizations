@@ -18,6 +18,8 @@ int calc (int a, int b) {
     int i = 0;
 
     while (c != 0) {
+        i++;
+
         const int q = floor(d / c);
         const int c_c = c;
         c = d - q * c;
@@ -27,9 +29,9 @@ int calc (int a, int b) {
         u_c = u_d - q * u_c;
 
         v_d = v_c;
-        v_d = q * v_c;
+        v_c = v_d - q * v_c;
 
-        i++;
+        printf("i: %d\tq: %d\tc: %d\td: %d\n", i, q, c, d);
     }
 
     printf("d: %d\tu_d: %d\tv_d: %d\n", d, u_d, v_d);

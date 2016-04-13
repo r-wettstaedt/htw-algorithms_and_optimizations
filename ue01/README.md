@@ -11,6 +11,8 @@
 
 ####Insbesondere: Terminiert der Algorithmus?
 * Ja, wenn c == 0
+* Dies geschieht in jedem Fall, da c in jeder Iteration einer kleiner werdenden Zahl zugewiesen wird
+* Durch die Abrundung mit der floor() Funktion, handelt es sich außerdem immer um ganzzahlige, sodass das das Erreichen von 0 unvermeidbar ist
 
 ####Wieso berechnet er den gcd?
 * Weil, Baum
@@ -29,6 +31,13 @@
     d: 3    u_d: 1  v_d: 0
     Done in 6μs
     Required iterations 2
+
+    -----------------------
+
+    a: 16   b: 12
+    d: 4    u_d: 0  v_d: 0
+    Done in 9μs
+    Required iterations 3
 
     -----------------------
 
@@ -90,7 +99,7 @@
     -----------------------
 
     N: 30000
-    Done in 42933μs = 43ms
+    Done in 42933μs (43ms)
     Required iterations 30000
 
 ####Conclusion
