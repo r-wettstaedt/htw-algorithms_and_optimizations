@@ -16,12 +16,12 @@
 ### 4. Untersuchen Sie die Anzahl der ausgeführten Schritte und die CPU-Zeiten in 1. und 3. an ausgewählten Beispielen. Was fällt Ihnen auf?
 
 ####  fibonacci
-    n = 3     time: 0.000034 seconds
-    n = 10    time: 0.000045 seconds
-    n = 15    time: 0.000064 seconds
-    n = 25    time: 0.001473 seconds
-    n = 40    time: 1.316626 seconds
-    n = 50    time: 167.200933 seconds
+    n = 3     time: 0.000030 seconds
+    n = 10    time: 0.000032 seconds
+    n = 15    time: 0.000040 seconds
+    n = 25    time: 0.000783 seconds
+    n = 40    time: 0.910071 seconds
+    n = 50    time: 114.586722 seconds
     
 #### extendedGCD
 

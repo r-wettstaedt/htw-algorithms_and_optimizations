@@ -19,17 +19,14 @@ int fibonacci(int n){
 int main(int argc, char *argv[]){
 	
 
-	int i = 0;
-	int c;
 	clock_t t;
 	int f = atoi(argv[1]);
 	
 	t = clock();
 	
-	for(c = 1; c <= f; c++){
-		printf("%d\n", fibonacci(i));
-		i++;
-	}
+
+	printf("%d\n", fibonacci(f));
+	
 	
 	t = clock() - t;
 	
