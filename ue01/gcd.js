@@ -1,6 +1,8 @@
 // imports
 var bigInt = require("big-integer")
-
+/*
+ * Aufgabe 1
+ */
 function extendedGCD(a, b) {
   console.log(a, b)
   if(typeof a.value == 'undefined' || typeof b.value == 'undefined') throw 'Input type error 1'
@@ -44,3 +46,5 @@ try {
 } catch(e) {
   throw 'Input type error 0'
 }
+
+module.exports = extendedGCD
