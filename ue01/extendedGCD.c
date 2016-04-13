@@ -5,31 +5,38 @@
 int extendedGCD(int a, int b){
 
 	
-	int c = a; 
-	int d = b; 
+	int r = b;
+	int old_r = a;
 	
-	int uc = 1; 
-	int vc = 0;
-	int ud = 0;
-	int vd = 1;
+	int s = 0; 
+	int old_s = 1;
+	int t = 1;
+	int old_t = 0;
 	
-	while(c != 0){
+	while(r != 0){
 		
 		
-		int q = floor(d/c); 		
-		int h = c; 			
-		c = d - q * c;		
-		d = h;				
-		uc = ud - q * uc;	
-		vc = vd - q * vc;	
-		ud = uc;			
-		vd = vc;			
+		int q = floor(old_r/r); 		
+		int h_r = r; 			
+		r = old_r - q * r;		
+		old_r = h_r;	
+		
+		int h_s = old_s;			
+		old_s = s;
+		s = h_s - q * s;
+		
+		int h_t = old_t;			
+		old_t = t;
+		t = h_t - q * t;	
+					
 		
 
 	}
 	
-	printf("The GCD of %d and %d is %d\n", a, b, d );
-	printf("(u, v): (%d, %d)\n", ud, vd);
+	
+	printf("Bézout coefficients are: %d, %d\n", old_s, old_t);
+    printf("Greatest common divisor: %d\n", old_r);
+
 	return 0; 
 	
 }
