@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <sys/time.h>
 
 
 int calc (int a, int b) {
@@ -14,6 +15,8 @@ int calc (int a, int b) {
     int u_d = 0;
     int v_d = 1;
 
+    int i = 0;
+
     while (c != 0) {
         const int q = floor(d / c);
         const int c_c = c;
@@ -25,10 +28,12 @@ int calc (int a, int b) {
 
         v_d = v_c;
         v_d = q * v_c;
+
+        i++;
     }
 
     printf("d: %d\tu_d: %d\tv_d: %d\n", d, u_d, v_d);
-    return 0;
+    return i;
 
 }
 
@@ -44,19 +49,26 @@ int main (int argc, char *argv[]) {
     int a = atoi(argv[1]);
     int b = atoi(argv[2]);
 
-    if (a <= 1 || b <= 1) {
-        printf("Parameters must be greater than 1\n");
-        return 1;
-    }
+    if (a < 0 || b < 0) {
+        printf("Parameters must be positive\n");
+        if (a == 0 && b == 0) {
+            printf("Only one parameter is allowed to be 0\n");
+        }
 
-    if (a == b) {
-        printf("Parameters must be diverse\n");
         return 1;
     }
 
     printf("a: %d\tb: %d\n", a, b);
 
-    calc(a, b);
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    const double start = tv.tv_usec;
+
+    const int steps = calc(a, b);
+
+    gettimeofday(&tv, NULL);
+    printf("Done in %gμs\n", tv.tv_usec - start);
+    printf("Required iterations %d\n", steps);
 
     return 0;
 
