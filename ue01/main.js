@@ -1,3 +1,4 @@
+console.log('asd')
 
 var bigInt = require("big-integer")
 
