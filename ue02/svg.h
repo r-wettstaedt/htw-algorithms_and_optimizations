@@ -10,7 +10,7 @@ double smallestY;
 double biggestX;
 double biggestY;
 
-int replace_str (char *orig, char *rep, char *after);
+int replaceStr (char *orig, char *rep, char *after);
 void replacePathStuff (struct Vector *v, char *name);
 void insertPath (struct Vector *a, struct Vector *b, struct Vector *c, struct Vector *d, struct Vector *e, int depth);
 void writeSvg ();

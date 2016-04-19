@@ -9,7 +9,7 @@ char svgTpl[1079] = "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http:/
 char path[172] = "<path d='M {{a_x}} {{a_y}} L {{c_x}} {{c_y}} L {{e_x}} {{e_y}} L {{d_x}} {{d_y}} L {{b_x}} {{b_y}} z' class='path-{{depth}}' fill='#fff' stroke='#fff' stroke-width='1' />\n\t";
 
 
-int replace_str (char *orig, char *rep, char *after) {
+int replaceStr (char *orig, char *rep, char *after) {
     // printf("replace %s with %s\n", orig, rep);
 
     char buffer[2048000];
@@ -40,11 +40,11 @@ void replacePathStuff (struct Vector *v, char *name) {
 
     sprintf(rep, "%f", v->x);
     sprintf(orig, "{{%s_x}}", name);
-    replace_str(orig, rep, "");
+    replaceStr(orig, rep, "");
 
     sprintf(rep, "%f", v->y);
     sprintf(orig, "{{%s_y}}", name);
-    replace_str(orig, rep, "");
+    replaceStr(orig, rep, "");
 
 }
 
@@ -53,11 +53,11 @@ void insertPath (struct Vector *a, struct Vector *b, struct Vector *c, struct Ve
     char rep[30];
     char orig[34];
     sprintf(orig, "%s", "{{path}}");
-    replace_str(orig, path, "{{path}}");
+    replaceStr(orig, path, "{{path}}");
 
     sprintf(rep, "%d", depth);
     sprintf(orig, "{{depth}}");
-    replace_str(orig, rep, "");
+    replaceStr(orig, rep, "");
 
     replacePathStuff(a, "a");
     replacePathStuff(b, "b");
@@ -78,22 +78,22 @@ void writeSvg () {
 
     sprintf(rep, "%f", smallestX);
     sprintf(orig, "%s", "{{minX}}");
-    replace_str(orig, rep, "");
+    replaceStr(orig, rep, "");
 
     sprintf(rep, "%f", smallestY);
     sprintf(orig, "%s", "{{minY}}");
-    replace_str(orig, rep, "");
+    replaceStr(orig, rep, "");
 
     sprintf(rep, "%f", -smallestX + biggestX);
     sprintf(orig, "%s", "{{width}}");
-    replace_str(orig, rep, "");
+    replaceStr(orig, rep, "");
 
     sprintf(rep, "%f", -smallestY + biggestY);
     sprintf(orig, "%s", "{{height}}");
-    replace_str(orig, rep, "");
+    replaceStr(orig, rep, "");
 
     sprintf(orig, "%s", "\n\t{{path}}");
-    replace_str(orig, "", "");
+    replaceStr(orig, "", "");
 
     FILE *fp = fopen("fractal.svg", "w");
     fputs(newSvg, fp);
