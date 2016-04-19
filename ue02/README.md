@@ -6,6 +6,7 @@
 ```bash
     ./fractal [A] [B] [alpha] [h]
 ```
+![FractalSVG](http://rawgit.com/r-wettstaedt/htw-algorithms_and_optimizations/feature/dev-robert/ue02/fractal.svg)
 
 
 ###2. Programmieren Sie die Ackermann-Funktion a: NxN → N. Berechnen Sie a für einige kleine (!) Werte m und n. Was fällt Ihnen auf?
