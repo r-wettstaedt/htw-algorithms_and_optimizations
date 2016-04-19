@@ -1,16 +1,19 @@
 #Programmieraufgabe 2
 
 
-###1. Programmieren Sie rekursiv mit den Parametern Punkt A, Punkt B, Winkel alpha, Höhe h folgendes Fraktal.
+###1. Programmieren Sie rekursiv mit den Parametern Punkt A, Punkt B, Winkel alpha, Höhe h ein Fraktal.
+![Fractal](http://i.imgur.com/wjSo8wr.png)
 ```bash
-    ./fractal <A> <B> <alpha> <h>
+    ./fractal [A] [B] [alpha] [h]
 ```
 
 
 ###2. Programmieren Sie die Ackermann-Funktion a: NxN → N. Berechnen Sie a für einige kleine (!) Werte m und n. Was fällt Ihnen auf?
 ```bash
-    ./ackermann <m> <n>
+    ./ackermann [m] [n]
 ```
+
+https://en.wikipedia.org/wiki/Ackermann_function#Table_of_values
 
     Big Integer     | Done in 12μs
     A(0, 0) = 1

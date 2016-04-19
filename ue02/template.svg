@@ -1,0 +1,7 @@
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='1000px' height='1000px' viewBox='-500 -500 1000 1000' zoomAndPan='disable' preserveAspectRatio='none'>
+    <path d='M 0 0 L 0 -256 L 128 -384 L 256 -256 L 256 0 z' fill='orange' stroke='black' stroke-width='3' />
+</svg>
+
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='{{width}}px' height='{{height}}px' viewBox='{{minX}} {{minY}} {{width}} {{height}}' zoomAndPan='disable' preserveAspectRatio='none'>
+    <path d='M {{a_x}} {{a_y}} L {{c_x}} {{c_y}} L {{e_x}} {{e_y}} L {{d_x}} {{d_y}} L {{b_x}} {{b_y}} z' fill='orange' stroke='black' stroke-width='3' />
+</svg>

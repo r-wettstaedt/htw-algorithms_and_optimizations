@@ -1,22 +1,41 @@
 CC=cc
 
-# CFLAGS=-Wall -g
-# FILE=fractal
-# ARGS=129 54
+CFLAGS=-Wall -g
+FILE=fractal
+ARGS=0 256 45 128
 
-CFLAGS=-Wall -g -lgmp
-FILE=ackermann
-ARGS=3 1
+# CFLAGS=-Wall -g -lgmp
+# FILE=ackermann
+# ARGS=3 1
 
-all: post-build
+clean:
+	rm -f vector.o
+	rm -f fractal.o
+	rm -f fractal
 
-pre-build:
-	rm -f ${FILE}
+f: fractal
 
-build: pre-build
-	${CC} ${CFLAGS} ${FILE}.c -o ${FILE}
+fractal: clean
+	$(CC) -c vector.c -o vector.o
+	$(CC) -c fractal.c -o fractal.o
+	$(CC) $(CFLAGS) vector.o fractal.o -o fractal
+	valgrind ./fractal $(ARGS)
+	# echo "\n==~ OUTPUT ~==\n"
+	# ./fractal $(ARGS)
 
-post-build: build
-	valgrind ./${FILE} ${ARGS}
-	echo "\n==~ OUTPUT ~==\n"
-	./${FILE} ${ARGS}
+# all: post-build
+
+# libs: vector.c
+# 	rm -f vector.o
+# 	${CC} ${CFLAGS} -c vector.c -o vector.o
+
+# pre-build: libs
+# 	rm -f ${FILE}.o
+
+# build: pre-build
+# 	${CC} ${CFLAGS} ${FILE}.c -o ${FILE}.o
+
+# post-build: build
+# 	valgrind ./${FILE}.o ${ARGS}
+# 	echo "\n==~ OUTPUT ~==\n"
+# 	./${FILE}.o ${ARGS}
