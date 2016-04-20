@@ -2,14 +2,12 @@
 #include <stdlib.h>
 #include <gmp.h>
 
-//http://macappstore.org/gmp/
-//ue02 $gcc ackermann.c -o ackermann -lgmp
  
 int ackermann(int m, int n)
 {
-        if (m == 0) return n + 1;
-        if (n == 0) return ackermann(m - 1, 1);
-        return ackermann(m - 1, ackermann(m, n - 1));
+    if (m == 0) return n + 1;
+    if (n == 0) return ackermann(m - 1, 1);
+    return ackermann(m - 1, ackermann(m, n - 1));
 }
 
 int ackermannBig(mpz_t result, mpz_t m, mpz_t n){
@@ -23,6 +21,7 @@ int ackermannBig(mpz_t result, mpz_t m, mpz_t n){
         mpz_add(result, n, ONE);
         return 0;
     }
+    
     if (mpz_cmp(n, ZERO) == 0) {
         mpz_sub(result, m, ONE);
         ackermannBig(result, result, ONE);
@@ -57,14 +56,13 @@ int main(int argc, char *argv[])
     
     ackermannBig(resultBig, mBig, nBig);
 
-    gmp_printf("A(%Zd, %Zd) = %Zd\n", mBig, nBig, resultBig);
+    gmp_printf("With Big Integer: A(%Zd, %Zd) = %Zd\n", mBig, nBig, resultBig);
 
 
         
-        int m = atoi(argv[1]);
-        int n = atoi(argv[2]);
+    int m = atoi(argv[1]);
+    int n = atoi(argv[2]);
   
-    	printf("A(%d, %d) = %d\n", m, n, ackermann(m, n));
- 
-        return 0;
+	printf("With Integer: A(%d, %d) = %d\n", m, n, ackermann(m, n));
+    return 0;
 }
