@@ -23,6 +23,7 @@ fractal: clean
 	# valgrind ./fractal $(ARGS)
 	# echo "\n==~ OUTPUT ~==\n"
 	./fractal $(ARGS)
+	tput bel
 
 # all: post-build
 

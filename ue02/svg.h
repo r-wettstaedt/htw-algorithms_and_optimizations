@@ -1,8 +1,8 @@
 #ifndef SVG_H_   /* Include guard */
 #define SVG_H_
 
-char svgTpl[1079];
-char path[172];
+char svgTpl[1295];
+char pathTpl[172];
 char *newSvg;
 
 double smallestX;

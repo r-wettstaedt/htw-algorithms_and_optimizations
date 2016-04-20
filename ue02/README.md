@@ -6,7 +6,28 @@
 ```bash
     ./fractal [A] [B] [alpha] [h]
 ```
-![FractalSVG](http://rawgit.com/r-wettstaedt/htw-algorithms_and_optimizations/feature/dev-robert/ue02/fractal.svg)
+
+---
+
+![FractalSVG1](http://rawgit.com/r-wettstaedt/htw-algorithms_and_optimizations/feature/dev-robert/ue02/fractal1.svg)
+```bash
+    ./fractal 0 256 45 128
+```
+
+---
+
+![FractalSVG2](http://rawgit.com/r-wettstaedt/htw-algorithms_and_optimizations/feature/dev-robert/ue02/fractal2.svg)
+```bash
+    ./fractal 0 256 90 90
+```
+
+---
+
+![FractalSVG3](http://rawgit.com/r-wettstaedt/htw-algorithms_and_optimizations/feature/dev-robert/ue02/fractal3.svg)
+```bash
+    ./fractal 0 256 100 128
+```
+
 
 
 ###2. Programmieren Sie die Ackermann-Funktion a: NxN → N. Berechnen Sie a für einige kleine (!) Werte m und n. Was fällt Ihnen auf?

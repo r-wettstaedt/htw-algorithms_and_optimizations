@@ -9,13 +9,15 @@
 #include "svg.h"
 
 const double rad = M_PI / 180;
+const double deg = 180 / M_PI;
+
 unsigned int origAlpha;
 double sinAlpha;
 
 
-int fractalPart (struct Vector *a, struct Vector *b, int alpha, double h, int depth) {
+int fractalPart (struct Vector *a, struct Vector *b, double alpha, double h, int depth) {
 
-    if (depth > 10 || h < 0.1) return h;
+    if (depth > 13 || h < 0.1) return h;
 
     struct Vector *ab = newVector(b->x - a->x, b->y - a->y);
     const double length_ab = vectorLength(ab);
@@ -30,12 +32,19 @@ int fractalPart (struct Vector *a, struct Vector *b, int alpha, double h, int de
 
     insertPath(a, b, c, d, e, depth);
 
-    h *= length_ce / length_ab;
+    struct Vector *de = newVector(d->x - e->x, d->y - e->y);
+    const double length_de = vectorLength(de);
+
+    const double beta = asin(h / length_de) * deg;
+
+    const double leftH = h * length_ce / length_ab;
+    const double rightH = h * length_de / length_ab;
+
     ++depth;
 
     return
-        fractalPart(c, e, alpha + origAlpha, h, depth) +
-        fractalPart(e, d, alpha - origAlpha, h, depth);
+        fractalPart(c, e, alpha + origAlpha, leftH, depth) +
+        fractalPart(e, d, alpha - beta, rightH, depth);
 
 }
 
