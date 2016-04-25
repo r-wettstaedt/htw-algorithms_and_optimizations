@@ -2,7 +2,7 @@
 CC = gcc
 
 # define any compile-time flags
-CFLAGS = -Wall -lgmp
+CFLAGS = -Wall -lgmp -g
 
 
 

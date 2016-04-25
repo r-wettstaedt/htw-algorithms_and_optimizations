@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <gmp.h>
 #include <math.h>
+#include <time.h>
 
 
 int convertTo2(int n)
@@ -39,7 +40,6 @@ int squareAndMultiply(int number, int exp)
     
     //square and multiply
     //run the array of binary exponent from the back
-    
     int result = number;
     for(i = length - 2; i >= 0; i--){
     	if(expArray[i] == 0){
@@ -61,8 +61,14 @@ int main(int argc, char *argv[])
         
     int n = atoi(argv[1]);
     int e = atoi(argv[2]);
-  
+    clock_t t;
+  	
+  	t = clock();
 	printf("%d^%d = %d\n", n, e, squareAndMultiply(n, e));
+	t = clock() - t;
+	
+	double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("Algorithm took %f seconds to execute \n", time_taken);
 	//printf("Decimal %d to binary is = %d\n", n, convertTo2(e));
     return 0;
 }
