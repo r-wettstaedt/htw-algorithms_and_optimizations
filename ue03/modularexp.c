@@ -30,7 +30,7 @@ int convertTo2(mpz_t result, mpz_t d)
 		
 }
 
-int squareAndMultiply(mpz_t number, mpz_t exp)
+int squareAndMultiply(mpz_t number, mpz_t exp, mpz_t modulo)
 {	
 	
 	mpz_t exponent;
@@ -63,17 +63,19 @@ int squareAndMultiply(mpz_t number, mpz_t exp)
     for(i = length - 2; i >= 0; i--){
     	if(expArray[i] == 0){
     		mpz_mul(result, result, result);
+    		mpz_fdiv_r(result, result, modulo);
     		//gmp_printf("expArray[i] = 0 square: %Zd\n", result);
     	}
     	else if(expArray[i] == 1){
     		mpz_mul(result, result, result);
     		//gmp_printf("expArray[i] = 1 square: %Zd\n", result);
     		mpz_mul(result, result, number);
+    		mpz_fdiv_r(result, result, modulo);
     		//gmp_printf("and multiply: %Zd\n", result);
     	}
     }
 	
-	gmp_printf("%Zd^%Zd is %Zd\n", number, exponent, result);
+	gmp_printf("%Zd^%Zd mod %Zd is %Zd\n", number, exponent, modulo, result);
  
 	return 0;
 }
@@ -81,20 +83,22 @@ int squareAndMultiply(mpz_t number, mpz_t exp)
 int main(int argc, char *argv[])
 {
     clock_t t;     
-    mpz_t n;
-    mpz_t e;
+    mpz_t a;
+    mpz_t b;
+    mpz_t m;
     mpz_init(ZERO);
     mpz_init_set_ui(TEN, 10);
     mpz_init_set_ui(TWO, 2);
     
-    mpz_init_set_str(n, argv[1], 10);
-    mpz_init_set_str(e, argv[2], 10);
+    mpz_init_set_str(a, argv[1], 10);
+    mpz_init_set_str(b, argv[2], 10);
+    mpz_init_set_str(m, argv[3], 10);
 	
 	mpz_t result;
 	mpz_init(result);
 	
 	t = clock();
-	squareAndMultiply(n, e);
+	squareAndMultiply(a, b, m);
 	t = clock() - t;
 	
 	double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
