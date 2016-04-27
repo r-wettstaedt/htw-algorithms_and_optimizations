@@ -4,71 +4,102 @@
 #include <math.h>
 #include <time.h>
 
+mpz_t ZERO;
+mpz_t TEN;
+mpz_t TWO;
 
-int convertTo2(int n)
+int convertTo2(mpz_t result, mpz_t d)
 {
+	mpz_t rem;
+	mpz_t i;
 	
-	int rem, i=1, binary=0;
+	mpz_init(rem);
+	mpz_init_set_ui(i, 1);
    
-    while (n!=0)
+    while (mpz_cmp(d, ZERO) != 0)
     {
-        rem = n%2;
-        n /= 2;
-        binary += rem * i;
-        i *= 10;
+    	
+        mpz_fdiv_qr(d, rem, d, TWO);
+        mpz_mul(rem, rem, i);
+        mpz_add(result, result, rem);
+        mpz_mul(i, i, TEN);
     }
-    return binary;
+    
+    return 0;
 		
 		
 }
 
-int squareAndMultiply(int number, int exp)
-{
-	int binexp = convertTo2(exp);
+int squareAndMultiply(mpz_t number, mpz_t exp)
+{	
 	
-	//convert binary exponent to array
-	int length = log10(binexp) + 1;
+	mpz_t exponent;
+	mpz_init_set(exponent, exp);
+	mpz_t binexp;
+	mpz_init(binexp);
+	//gmp_printf("Exp is: %Zd\n", exp);
+	convertTo2(binexp, exp);
+	//gmp_printf("Binexp is: %Zd\n", binexp);
+	
+	size_t length = mpz_sizeinbase(binexp, 10);
+	//printf("Size is %zu\n", length);
     int i;
     int *expArray = calloc(length, sizeof(int));
-    for ( i = 0; i < length; ++i, binexp /= 10 )
+    for ( i = 0; i < length; ++i, mpz_fdiv_q(binexp, binexp, TEN))
     {
-        expArray[i] = binexp % 10;
-        //printf("%d", expArray[i]);
+    	mpz_t h;
+		mpz_init(h);
+        mpz_fdiv_r(h, binexp, TEN);
+        expArray[i] = mpz_get_ui(h);
+        //printf("[%d]", expArray[i]);
     }
     
     //printf("\n");
     
-    //square and multiply
-    //run the array of binary exponent from the back
-    int result = number;
+    mpz_t result;
+    mpz_init_set(result, number);
+    //gmp_printf("Number is: %Zd\n", result);
+    
     for(i = length - 2; i >= 0; i--){
     	if(expArray[i] == 0){
-    		result *= result;
+    		mpz_mul(result, result, result);
+    		//gmp_printf("expArray[i] = 0 square: %Zd\n", result);
     	}
     	else if(expArray[i] == 1){
-    		result *= result;
-    		result += result;
+    		mpz_mul(result, result, result);
+    		//gmp_printf("expArray[i] = 1 square: %Zd\n", result);
+    		mpz_mul(result, result, number);
+    		//gmp_printf("and multiply: %Zd\n", result);
     	}
     }
-    
-    return result;
-    
 	
+	gmp_printf("%Zd^%Zd is %.10e\n", number, exponent, result);
+ 
+	return 0;
 }
 
 int main(int argc, char *argv[])
 {
-        
-    int n = atoi(argv[1]);
-    int e = atoi(argv[2]);
-    clock_t t;
-  	
-  	t = clock();
-	printf("%d^%d = %d\n", n, e, squareAndMultiply(n, e));
+    clock_t t;     
+    mpz_t n;
+    mpz_t e;
+    mpz_init(ZERO);
+    mpz_init_set_ui(TEN, 10);
+    mpz_init_set_ui(TWO, 2);
+    
+    mpz_init_set_str(n, argv[1], 10);
+    mpz_init_set_str(e, argv[2], 10);
+	
+	mpz_t result;
+	mpz_init(result);
+	
+	t = clock();
+	squareAndMultiply(n, e);
 	t = clock() - t;
 	
 	double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("Algorithm took %f seconds to execute \n", time_taken);
-	//printf("Decimal %d to binary is = %d\n", n, convertTo2(e));
+
+
     return 0;
 }

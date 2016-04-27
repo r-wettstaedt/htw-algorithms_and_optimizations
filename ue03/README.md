@@ -5,12 +5,17 @@
 
 
 ###1. Implementieren Sie einen Algorithmus, der die n-te Potenz a^n einer natürlichen Zahl a in O (log n) Schritten berechnet.
+		Code: squareandmultiply.c // zum Vergleich: multiply.c - einfache Multiplikation
+		Aufruf:
 ```bash
-    ./squaremultiplybig <a> <n>
+    ./squaremultiply <a> <n>
+    ./multiply <a> <n>
 ```
 
 
 ###2. Modifizieren Sie Ihr Programm aus 1. derart, dass die modulare Potenz a^n mod m berechnet wird.
+		Code: modularexp.c
+		Aufruf:
 ```bash
     ./modularexp <a> <n> <m>
 ```
@@ -71,4 +76,14 @@
 - Modular exponentiation ist viel schneller als Square-and-Multiply, dadurch dass alle Werte waehrend der Berechnung bei modulo reduziert werden.
 
 ###4. Wie lange dauert die Berechnung von an mod m in 2., wenn a, n und m 1000-bit- Zahlen sind?
+```bash
+    ./modularexp1000
+```
+		Die Zahlen werden mit einem Random generiert, so dass die Bit-Anzahl 1000-bit ist.
+		
+		Time: 0.004307 seconds
+		Time: 0.004021 seconds
+		Time: 0.004608 seconds 
+		
+- Die Zeit ist immer ungefähr 4.5 Millisekunden, auch bei sehr großen Zahlen.
 			
