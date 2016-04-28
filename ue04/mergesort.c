@@ -1,8 +1,7 @@
 #include <stdio.h>
-#include "mergesort.h"
+#include "_mergesort.h"
 
-int* mergesort (int array[]) {
-    printf("mergesort\n");
+int* _mergesort (int array[]) {
 
     return array;
 }

@@ -1,8 +1,7 @@
 #include <stdio.h>
-#include "quicksort.h"
+#include "_quicksort.h"
 
-int* quicksort (int array[]) {
-    printf("quicksort\n");
+int* _quicksort (int array[]) {
 
     return array;
 }

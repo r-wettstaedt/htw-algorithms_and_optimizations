@@ -1,8 +1,7 @@
 #include <stdio.h>
-#include "insertionsort.h"
+#include "_insertionsort.h"
 
-int* insertionsort (int array[]) {
-    printf("insertionsort\n");
+int* _insertionsort (int array[]) {
 
     return array;
 }
