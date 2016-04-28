@@ -23,6 +23,6 @@ sort: clean
 	$(CC) -c sort.c -o sort.o
 	$(CC) $(CFLAGS) quicksort.o insertionsort.o mergesort.o sort.o -o sort
 	valgrind ./sort $(ARGS)
-	echo "\n==~ OUTPUT ~==\n"
-	./sort $(ARGS)
+	# echo "\n==~ OUTPUT ~==\n"
+	# ./sort $(ARGS)
 	tput bel

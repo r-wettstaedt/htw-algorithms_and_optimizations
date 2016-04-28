@@ -32,54 +32,115 @@ int *copyArray (int array[], const int size) {
     return A;
 }
 
+void timeAsString (char *buffer, unsigned long start) {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    unsigned long end = 1000000 * tv.tv_sec + tv.tv_usec;
+    unsigned long diff = end - start;
+
+    char *unity = "µs";
+    if (diff >= 10000000) {
+        diff /= 1000000;
+        unity = "s";
+    } else if (diff >= 10000) {
+         diff /= 1000;
+         unity = "ms";
+    }
+
+    snprintf(buffer, sizeof(buffer), "%lu%s", diff, unity);
+}
+
 int main (int argc, char *argv[]) {
 
-    const int ARRAYSIZE = 5;
-    int *array = getRandomArray(ARRAYSIZE);
-    printf("\n\nRandom Array\n");
-    printArray(array, ARRAYSIZE);
+    int arraysizes[5] = {10, 100, 1000, 10000, 100000};
+    int arraysize;
+    int *array;
 
     struct timeval tv;
     unsigned long start;
-    unsigned long end;
+    char *timeString = malloc(256);
+
+    for (int i = 0; i < 5; ++i) {
+        arraysize = arraysizes[i];
+        printf("\n\n~~~~= Arraysize %d =~~~~\n", arraysize);
+
+        array = getRandomArray(arraysize);
+        printf("\n  ~~= Random Array =~~\n");
+        // printArray(array, arraysize);
 
 
-    /* INSERTIONSORT */
-    int *A = copyArray(array, ARRAYSIZE);
-    gettimeofday(&tv, NULL);
-    start = 1000000 * tv.tv_sec + tv.tv_usec;
+        /* INSERTIONSORT */
+        int *A = copyArray(array, arraysize);
+        gettimeofday(&tv, NULL);
+        start = 1000000 * tv.tv_sec + tv.tv_usec;
 
-    _insertionsort(A, ARRAYSIZE);
+        _insertionsort(A, arraysize);
 
-    gettimeofday(&tv, NULL);
-    end = 1000000 * tv.tv_sec + tv.tv_usec;
-    printf("\n\nInsertionsort done in %luµs\n", (end - start));
-    printArray(A, ARRAYSIZE);
-
-
-    /* MERGESORT */
-    A = copyArray(array, ARRAYSIZE);
-    gettimeofday(&tv, NULL);
-    start = 1000000 * tv.tv_sec + tv.tv_usec;
-
-    _mergesort(A, ARRAYSIZE);
-
-    gettimeofday(&tv, NULL);
-    end = 1000000 * tv.tv_sec + tv.tv_usec;
-    printf("\n\nMergesort done in %luµs\n", (end - start));
-    printArray(A, ARRAYSIZE);
+        timeAsString(timeString, start);
+        printf("  Insertionsort done in %s\n", timeString);
+        // printArray(A, arraysize);
 
 
-    /* QUICKSORT */
-    A = copyArray(array, ARRAYSIZE);
-    gettimeofday(&tv, NULL);
-    start = 1000000 * tv.tv_sec + tv.tv_usec;
+        /* MERGESORT */
+        A = copyArray(array, arraysize);
+        gettimeofday(&tv, NULL);
+        start = 1000000 * tv.tv_sec + tv.tv_usec;
 
-    _quicksort(A, ARRAYSIZE);
+        _mergesort(A, arraysize);
 
-    gettimeofday(&tv, NULL);
-    end = 1000000 * tv.tv_sec + tv.tv_usec;
-    printf("\n\nQuicksort done in %luµs\n", (end - start));
-    printArray(A, ARRAYSIZE);
+        timeAsString(timeString, start);
+        printf("  Mergesort     done in %s\n", timeString);
+        // printArray(A, arraysize);
+
+
+        /* QUICKSORT */
+        A = copyArray(array, arraysize);
+        gettimeofday(&tv, NULL);
+        start = 1000000 * tv.tv_sec + tv.tv_usec;
+
+        _quicksort(A, arraysize);
+
+        timeAsString(timeString, start);
+        printf("  Quicksort     done in %s\n", timeString);
+        // printArray(A, arraysize);
+
+
+        printf("\n  ~~= Presorted Array =~~\n");
+
+
+        /* INSERTIONSORT */
+        gettimeofday(&tv, NULL);
+        start = 1000000 * tv.tv_sec + tv.tv_usec;
+
+        _insertionsort(A, arraysize);
+
+        timeAsString(timeString, start);
+        printf("  Insertionsort done in %s\n", timeString);
+        // printArray(A, arraysize);
+
+
+        /* MERGESORT */
+        gettimeofday(&tv, NULL);
+        start = 1000000 * tv.tv_sec + tv.tv_usec;
+
+        _mergesort(A, arraysize);
+
+        timeAsString(timeString, start);
+        printf("  Mergesort     done in %s\n", timeString);
+        // printArray(A, arraysize);
+
+
+        /* QUICKSORT */
+        gettimeofday(&tv, NULL);
+        start = 1000000 * tv.tv_sec + tv.tv_usec;
+
+        _quicksort(A, arraysize);
+
+        timeAsString(timeString, start);
+        printf("  Quicksort     done in %s\n", timeString);
+        // printArray(A, arraysize);
+    }
+
+    printf("\n\n");
 
 }
