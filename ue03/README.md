@@ -11,7 +11,7 @@
 Aufruf:
     ./squaremultiply <a> <n>
 ```
-Test:
+	Test:
 		2^1 = 2
 		2^5 = 32
 		2^19 = 524288
@@ -25,7 +25,7 @@ Test:
 Aufruf:
     ./modularexp <a> <n> <m>
 ```
-Test:
+	Test:
 		2^5 mod 13 = 6
 		2^19 mod 24 = 8
 		2^123 mod 35 = 8
@@ -34,7 +34,7 @@ Test:
 
 ###3. Testen Sie Ihre Programme und messen Sie dabei die Laufzeit
 #### Simple multiplication
-		2^5					| Time: 0.000009 seconds	
+		2^5				| Time: 0.000009 seconds	
 		2^12				| Time: 0.000010 seconds
 		2^123				| Time: 0.000013 seconds
 		2^123456 			| Time: 0.319531 seconds
