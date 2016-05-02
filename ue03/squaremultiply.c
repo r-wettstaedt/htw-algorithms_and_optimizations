@@ -73,7 +73,7 @@ int squareAndMultiply(mpz_t number, mpz_t exp)
     	}
     }
 	
-	gmp_printf("%Zd^%Zd is %.10e\n", number, exponent, result);
+	//gmp_printf("%Zd^%Zd is %.Zd\n", number, exponent, result);
  
 	return 0;
 }

@@ -75,7 +75,7 @@ int squareAndMultiply(mpz_t number, mpz_t exp, mpz_t modulo)
     	}
     }
 	
-	gmp_printf("%Zd^%Zd mod %Zd is %Zd\n", number, exponent, modulo, result);
+	//gmp_printf("%Zd^%Zd mod %Zd is %Zd\n", number, exponent, modulo, result);
  
 	return 0;
 }
@@ -112,11 +112,11 @@ int main(int argc, char *argv[])
 	mpz_urandomb(m, state, 1000);
 	
 	size_t lengtha = mpz_sizeinbase(a, 10);
-	printf("Size a is %zu\n", lengtha);
+	//printf("Size a is %zu\n", lengtha);
 	size_t lengthb = mpz_sizeinbase(b, 10);
-	printf("Size b is %zu\n", lengthb);
+	//printf("Size b is %zu\n", lengthb);
 	size_t lengthm = mpz_sizeinbase(m, 10);
-	printf("Size m is %zu\n", lengthm);
+	//printf("Size m is %zu\n", lengthm);
 	
 	mpz_t result;
 	mpz_init(result);

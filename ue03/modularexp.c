@@ -75,7 +75,7 @@ int squareAndMultiply(mpz_t number, mpz_t exp, mpz_t modulo)
     	}
     }
 	
-	gmp_printf("%Zd^%Zd mod %Zd is %Zd\n", number, exponent, modulo, result);
+	//gmp_printf("%Zd^%Zd mod %Zd is %Zd\n", number, exponent, modulo, result);
  
 	return 0;
 }

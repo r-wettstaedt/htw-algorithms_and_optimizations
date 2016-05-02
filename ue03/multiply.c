@@ -20,7 +20,7 @@ int multiply(mpz_t number, mpz_t exp)
     	mpz_mul(result, result, number);
     }
 	
-	gmp_printf("%Zd^%Zd is %.10e\n", number, exp, result);
+	//gmp_printf("%Zd^%Zd is %.Zd\n", number, exp, result);
  
 	return 0;
 }
