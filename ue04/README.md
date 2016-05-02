@@ -4,11 +4,41 @@
 
 
 ###1. Implementieren Sie die Sortieralgorithmen
+Code: sort.c
+	
+Aufruf:
 ```bash
 ./sort
 ```
 
+Test:
+```
+~~~~= Arraysize 10 =~~~~
+
+  ~~= Random Array =~~
+[ 830 15 659 543 314 275 968 326 112 327 ]
+
+Insertionsort
+[ 15 112 275 314 326 327 543 659 830 968 ]
+Mergesort
+[ 15 112 275 314 326 327 543 659 830 968 ]
+Quicksort
+[ 15 112 275 314 326 327 543 659 830 968 ]
+
+  ~~= Presorted Array =~~
+Insertionsort
+[ 15 112 275 314 326 327 543 659 830 968 ]
+Mergesort
+[ 15 112 275 314 326 327 543 659 830 968 ]
+Quicksort
+[ 15 112 275 314 326 327 543 659 830 968 ]
+```
+
+
+
 ###2. Messen Sie die (über mehrere Läufe gemittelten) Laufzeiten dieser Algorithmen für zufällig erzeugte Listen ganzer Zahlen verschiedener Längen.
+
+####Laufzeiten für einen Lauf
 ```
 ~~~~= Arraysize 10 =~~~~
 
@@ -74,6 +104,20 @@ Insertion done in 0.000441 seconds
 Mergesort done in 0.020837 seconds
 Quicksort done in 0.704434 seconds
 ```
+
+####Über 5 Laüfe gemittelte Laufzeiten:
+```
+Average run time on random arrays:
+Insertion: 7.555748 seconds
+Mergesort: 0.031240 seconds
+Quicksort: 0.012234 seconds
+
+Average run time on presorted arrays:
+Insertion: 0.000456 seconds
+Mergesort: 0.024142 seconds
+Quicksort: 0.743308 seconds
+```
+
 ###3. Vergleichen Sie die Laufzeiten mit den theoretisch ermittelten mittleren Anzahlen von Vergleichen, die in den Algorithmen vorgenommen werden.
 ###4. Was geschieht, wenn man die Algorithmen auf die sortierte Liste 0, 1, 2, ... n – 1 anwendet?
 ###5. Stellen Sie Ihre Ergebnisse in einem Diagramm dar (x-Achse Eingabegröße n, y-Achse Laufzeiten bzw. Anzahlen der Vergleiche).
