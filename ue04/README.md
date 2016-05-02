@@ -4,14 +4,14 @@
 
 
 ###1. Implementieren Sie die Sortieralgorithmen
-Code: sort.c
+	Code: sort.c
 	
-Aufruf:
+####Aufruf:
 ```bash
 ./sort
 ```
 
-Test:
+####Test:
 ```
 ~~~~= Arraysize 10 =~~~~
 
@@ -119,5 +119,9 @@ Quicksort: 0.743308 seconds
 ```
 
 ###3. Vergleichen Sie die Laufzeiten mit den theoretisch ermittelten mittleren Anzahlen von Vergleichen, die in den Algorithmen vorgenommen werden.
+
 ###4. Was geschieht, wenn man die Algorithmen auf die sortierte Liste 0, 1, 2, ... n – 1 anwendet?
+- Man kann von den gemittelten Laufzeiten sehen, dass z.B. Insertionsort, der relativ langsam auf den Random Arrays ist, sehr schnell die sortierten Listen durchlaufen kann.
+- Im Gegenfall, ist Quicksort sehr schnell auf random arrays aber langsamer auf sortierten arrays
+
 ###5. Stellen Sie Ihre Ergebnisse in einem Diagramm dar (x-Achse Eingabegröße n, y-Achse Laufzeiten bzw. Anzahlen der Vergleiche).
