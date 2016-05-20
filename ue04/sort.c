@@ -4,12 +4,11 @@
 #include <sys/time.h>
 
 
-unsigned long int counter = 0;
+unsigned long long int counter = 0;
 
 //INSERTION SORT
 int *iSort (int A[], int size) {
     int i, key;
-    counter = 0;
     for (int j = 0; j < size; ++j) {
         key = A[j];
         i = j - 1;
@@ -27,7 +26,6 @@ int *iSort (int A[], int size) {
 
 //MERGESORT
 void merge(int A[], int al, int ar, int B[], int bl, int br, int C[]) {
-	counter = 0;
     int i = al, j = bl;
     for (int k = 0; k <= ar - al + br - bl + 1; k++) {
         if (i > ar) {
@@ -64,15 +62,14 @@ void swap(int A[], int i, int j) {
 }
 
 int *qSort (int A[], int al, int ar) {
-	counter = 0;
     if (al < ar) {
         int pivot = A[al], i = al, j = ar + 1;
         while (1) {
+         	counter++;
             while (A[++i] < pivot && i < ar) {}
             while (A[--j] > pivot && j > al) {}
             if (i < j) {
             	swap(A, i, j);
-            	counter++;
             }
             else break;
         }
@@ -122,7 +119,7 @@ int main(int argc, char *argv[])
 	int sortTypes = 6;
 	double runTimes[6] = {0};
 	//array to hold comparisons of each sort
-	double comparisons[6] = {0};
+	unsigned long long comparisons[6] = {0};
 	//number of test executions
 	int numberOfTests = 5;
 	
@@ -141,43 +138,46 @@ int main(int argc, char *argv[])
 			/* INSERTIONSORT */
 			int *A = copyArray(array, arraysize);
 			t = clock();
+			counter = 0;
 			iSort(A, arraysize);
 			
 			t = clock() - t;
 	
 			double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 			runTimes[0] += time_taken;
-			unsigned long int comparisons_needed = counter;
-			comparisons[0] += comparisons_needed/10000;
-			printf("Insertion done in %f seconds and %lu comparisons\n", time_taken, comparisons_needed);
+			unsigned long long int comparisons_needed = counter;
+			comparisons[0] += comparisons_needed;
+			printf("Insertion done in %f seconds and %llu comparisons\n", time_taken, comparisons_needed);
 			//if(arraysize == 10) printArray(A, arraysize);
 
 
 			/* MERGESORT */
 			A = copyArray(array, arraysize);
 			t = clock();
+			counter = 0;
 			mSort(A, 0, arraysize - 1);
 			t = clock() - t;
 	
 			time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 			runTimes[1] += time_taken;
 			comparisons_needed = counter;
-			comparisons[1] += comparisons_needed/10000;
-			printf("Mergesort done in %f seconds and %lu comparisons\n", time_taken, comparisons_needed);
+			comparisons[1] += comparisons_needed;
+			printf("Mergesort done in %f seconds and %llu comparisons\n", time_taken, comparisons_needed);
 			//if(arraysize == 10) printArray(A, arraysize);
 
 
 			/* QUICKSORT */
 			A = copyArray(array, arraysize);
 			t = clock();
+			counter = 0;
 			qSort(A, 0, arraysize - 1);
 			t = clock() - t;
 	
 			time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 			runTimes[2] += time_taken;
 			comparisons_needed = counter;
-			comparisons[2] += comparisons_needed/10000;
-			printf("Quicksort done in %f seconds and %lu comparisons\n", time_taken, comparisons_needed);
+			comparisons[2] += comparisons_needed;
+			printf("Quicksort done in %f seconds and %llu comparisons\n", time_taken, comparisons_needed);
 			//if(arraysize == 10) printArray(A, arraysize);
 
 
@@ -186,40 +186,43 @@ int main(int argc, char *argv[])
 
 			/* INSERTIONSORT */
 			t = clock();
+			counter = 0;
 			iSort(A, arraysize);
 			t = clock() - t;
 	
 			time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 			runTimes[3] += time_taken;
 			comparisons_needed = counter;
-			comparisons[3] += comparisons_needed/10000;
-			printf("Insertion done in %f seconds and %lu comparisons\n", time_taken, comparisons_needed);
+			comparisons[3] += comparisons_needed;
+			printf("Insertion done in %f seconds and %llu comparisons\n", time_taken, comparisons_needed);
 			//if(arraysize == 10) printArray(A, arraysize);
 
 
 			/* MERGESORT */
 			t = clock();
+			counter = 0;
 			mSort(A, 0, arraysize - 1);
 			t = clock() - t;
 	
 			time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 			runTimes[4] += time_taken;
 			comparisons_needed = counter;
-			comparisons[4] += comparisons_needed/10000;
-			printf("Mergesort done in %f seconds and %lu comparisons\n", time_taken, comparisons_needed);
+			comparisons[4] += comparisons_needed;
+			printf("Mergesort done in %f seconds and %llu comparisons\n", time_taken, comparisons_needed);
 			//if(arraysize == 10) printArray(A, arraysize);
 
 
 			/* QUICKSORT */
 			t = clock();
+			counter = 0;
 			qSort(A, 0, arraysize - 1);
 			t = clock() - t;
 	
 			time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
 			runTimes[5] += time_taken;
 			comparisons_needed = counter;
-			comparisons[5] += comparisons_needed/10000;
-			printf("Quicksort done in %f seconds and %lu comparisons\n", time_taken, comparisons_needed);
+			comparisons[5] += comparisons_needed;
+			printf("Quicksort done in %f seconds and %llu comparisons\n", time_taken, comparisons_needed);
 			//if(arraysize == 10) printArray(A, arraysize);
 		}
     
@@ -240,15 +243,15 @@ int main(int argc, char *argv[])
 	printf("\n");
 	
 	printf("Average comparisons on random arrays:\n");
-	printf("Insertion: %d comparisons\n", (int)comparisons[0]/numberOfTests*10000);
-	printf("Mergesort: %d comparisons\n", (int)comparisons[1]/numberOfTests*10000);
-	printf("Quicksort: %d comparisons\n", (int)comparisons[2]/numberOfTests*10000);
+	printf("Insertion: %llu comparisons\n", comparisons[0]/numberOfTests);
+	printf("Mergesort: %llu comparisons\n", comparisons[1]/numberOfTests);
+	printf("Quicksort: %llu comparisons\n", comparisons[2]/numberOfTests);
 	printf("\n");
 	
 	printf("Average comparisons on presorted arrays:\n");
-	printf("Insertion: %d comparisons\n", (int)comparisons[3]/numberOfTests*10000);
-	printf("Mergesort: %d comparisons\n", (int)comparisons[4]/numberOfTests*10000);
-	printf("Quicksort: %d comparisons\n", (int)comparisons[5]/numberOfTests*10000);
+	printf("Insertion: %llu comparisons\n", comparisons[3]/numberOfTests);
+	printf("Mergesort: %llu comparisons\n", comparisons[4]/numberOfTests);
+	printf("Quicksort: %llu comparisons\n", comparisons[5]/numberOfTests);
 	
 	
     printf("\n\n");

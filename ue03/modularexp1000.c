@@ -111,6 +111,8 @@ int main(int argc, char *argv[])
 	mpz_urandomb(b, state, 1000);
 	mpz_urandomb(m, state, 1000);
 	
+	//(a mod max+1-min) + min
+	
 	size_t lengtha = mpz_sizeinbase(a, 10);
 	//printf("Size a is %zu\n", lengtha);
 	size_t lengthb = mpz_sizeinbase(b, 10);

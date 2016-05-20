@@ -43,66 +43,66 @@ Quicksort
 ~~~~= Arraysize 10 =~~~~
 
   ~~= Random Array =~~
-Insertion done in 0.000003 seconds
-Mergesort done in 0.000002 seconds
-Quicksort done in 0.000002 seconds
+Insertion done in 0.000001 seconds and 33 comparisons
+Mergesort done in 0.000002 seconds and 24 comparisons
+Quicksort done in 0.000001 seconds and 9 comparisons
 
   ~~= Presorted Array =~~
-Insertion done in 0.000000 seconds
-Mergesort done in 0.000001 seconds
-Quicksort done in 0.000001 seconds
+Insertion done in 0.000001 seconds and 10 comparisons
+Mergesort done in 0.000002 seconds and 19 comparisons
+Quicksort done in 0.000001 seconds and 9 comparisons
 
 
 ~~~~= Arraysize 100 =~~~~
 
   ~~= Random Array =~~
-Insertion done in 0.000011 seconds
-Mergesort done in 0.000048 seconds
-Quicksort done in 0.000010 seconds
+Insertion done in 0.000008 seconds and 2190 comparisons
+Mergesort done in 0.000018 seconds and 551 comparisons
+Quicksort done in 0.000007 seconds and 152 comparisons
 
   ~~= Presorted Array =~~
-Insertion done in 0.000001 seconds
-Mergesort done in 0.000021 seconds
-Quicksort done in 0.000016 seconds
+Insertion done in 0.000001 seconds and 100 comparisons
+Mergesort done in 0.000021 seconds and 360 comparisons
+Quicksort done in 0.000018 seconds and 94 comparisons
 
 
 ~~~~= Arraysize 1000 =~~~~
 
   ~~= Random Array =~~
-Insertion done in 0.000849 seconds
-Mergesort done in 0.000249 seconds
-Quicksort done in 0.000123 seconds
+Insertion done in 0.000776 seconds and 256688 comparisons
+Mergesort done in 0.000228 seconds and 8697 comparisons
+Quicksort done in 0.000107 seconds and 2372 comparisons
 
   ~~= Presorted Array =~~
-Insertion done in 0.000006 seconds
-Mergesort done in 0.000194 seconds
-Quicksort done in 0.000891 seconds
+Insertion done in 0.000007 seconds and 1000 comparisons
+Mergesort done in 0.000181 seconds and 5242 comparisons
+Quicksort done in 0.000836 seconds and 816 comparisons
 
 
 ~~~~= Arraysize 10000 =~~~~
 
   ~~= Random Array =~~
-Insertion done in 0.072222 seconds
-Mergesort done in 0.002420 seconds
-Quicksort done in 0.001004 seconds
+Insertion done in 0.076856 seconds and 24912857 comparisons
+Mergesort done in 0.002808 seconds and 120423 comparisons
+Quicksort done in 0.001068 seconds and 35556 comparisons
 
   ~~= Presorted Array =~~
-Insertion done in 0.000041 seconds
-Mergesort done in 0.001907 seconds
-Quicksort done in 0.034848 seconds
+Insertion done in 0.000045 seconds and 10000 comparisons
+Mergesort done in 0.001916 seconds and 73379 comparisons
+Quicksort done in 0.034230 seconds and 14021 comparisons
 
 
 ~~~~= Arraysize 100000 =~~~~
 
   ~~= Random Array =~~
-Insertion done in 7.497361 seconds
-Mergesort done in 0.029497 seconds
-Quicksort done in 0.010858 seconds
+Insertion done in 7.746232 seconds and 2506041110 comparisons
+Mergesort done in 0.029859 seconds and 1536078 comparisons
+Quicksort done in 0.012542 seconds and 506314 comparisons
 
   ~~= Presorted Array =~~
-Insertion done in 0.000441 seconds
-Mergesort done in 0.020837 seconds
-Quicksort done in 0.704434 seconds
+Insertion done in 0.000461 seconds and 100000 comparisons
+Mergesort done in 0.022008 seconds and 915899 comparisons
+Quicksort done in 0.705005 seconds and 282178 comparisons
 ```
 
 ####Über 5 Laüfe gemittelte Laufzeiten:
@@ -119,6 +119,21 @@ Quicksort: 0.743308 seconds
 ```
 
 ###3. Vergleichen Sie die Laufzeiten mit den theoretisch ermittelten mittleren Anzahlen von Vergleichen, die in den Algorithmen vorgenommen werden.
+```
+Average comparisons on random arrays:
+Insertion: 2530972413 comparisons
+Mergesort: 1665706 comparisons
+Quicksort: 544744 comparisons
+
+Average comparisons on presorted arrays:
+Insertion: 111110 comparisons
+Mergesort: 991530 comparisons
+Quicksort: 297219 comparisons
+```
+
+- Man sieht, dass die durchschnittliche Laufzeiten in machen Fällen mit der Anzahl der durchschnittlichen Vergleichen zusammenhägen
+- Z.B dauert der Insertion-Sort auf random array am längsten und hat auch die größeste Anzahl an Vergleichen
+- Anderseits, sieht man bei dem Merge-Sort keine Beziehung zwischen den Daten
 
 ###4. Was geschieht, wenn man die Algorithmen auf die sortierte Liste 0, 1, 2, ... n – 1 anwendet?
 - Man kann von den gemittelten Laufzeiten sehen, dass z.B. Insertionsort, der relativ langsam auf den Random Arrays ist, sehr schnell die sortierten Listen durchlaufen kann.
