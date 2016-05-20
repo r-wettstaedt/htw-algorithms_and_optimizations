@@ -83,6 +83,9 @@ int *qSort (int A[], int al, int ar) {
     return A;
 }
 
+//HEAPSORT
+...
+
 //HELPER FUNCTIONS FOR OUTPUT
 void printArray (int array[], const int size) {
     printf("[ ");
