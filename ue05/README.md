@@ -30,79 +30,79 @@ Heapsort:
 ~~~~= Arraysize 10 =~~~~
 
   ~~= Random Array =~~
-[ 621 675 54 936 121 868 352 362 133 468 ]
-Heapsort  done in 0.000002 seconds and 68 comparisons
-[ 54 121 133 352 362 468 621 675 868 936 ]
-Insertion done in 0.000001 seconds and 34 comparisons
+[ 480 249 507 957 740 63 777 360 149 758 ]
+Heapsort  done in 0.000002 seconds and 22 comparisons
+[ 63 149 249 360 480 507 740 758 777 957 ]
+Insertion done in 0.000001 seconds and 32 comparisons
 Mergesort done in 0.000002 seconds and 24 comparisons
-Quicksort done in 0.000001 seconds and 11 comparisons
+Quicksort done in 0.000000 seconds and 10 comparisons
 
   ~~= Presorted Array =~~
-Heapsort  done in 0.000002 seconds and 68 comparisons
-[ 54 121 133 352 362 468 621 675 868 936 ]
-Insertion done in 0.000002 seconds and 10 comparisons
-Mergesort done in 0.000002 seconds and 19 comparisons
-Quicksort done in 0.000000 seconds and 9 comparisons
+Heapsort  done in 0.000002 seconds and 22 comparisons
+[ 63 149 249 360 480 507 740 758 777 957 ]
+Insertion done in 0.000001 seconds and 10 comparisons
+Mergesort done in 0.000001 seconds and 19 comparisons
+Quicksort done in 0.000001 seconds and 9 comparisons
 
 
 ~~~~= Arraysize 100 =~~~~
 
   ~~= Random Array =~~
-Heapsort  done in 0.000014 seconds and 1260 comparisons
-Insertion done in 0.000013 seconds and 2375 comparisons
-Mergesort done in 0.000029 seconds and 545 comparisons
-Quicksort done in 0.000010 seconds and 156 comparisons
+Heapsort  done in 0.000013 seconds and 653 comparisons
+Insertion done in 0.000011 seconds and 2665 comparisons
+Mergesort done in 0.000028 seconds and 534 comparisons
+Quicksort done in 0.000010 seconds and 171 comparisons
 
   ~~= Presorted Array =~~
-Heapsort  done in 0.000011 seconds and 1260 comparisons
-Insertion done in 0.000002 seconds and 100 comparisons
-Mergesort done in 0.000015 seconds and 356 comparisons
-Quicksort done in 0.000013 seconds and 95 comparisons
+Heapsort  done in 0.000014 seconds and 653 comparisons
+Insertion done in 0.000001 seconds and 100 comparisons
+Mergesort done in 0.000021 seconds and 358 comparisons
+Quicksort done in 0.000017 seconds and 96 comparisons
 
 
 ~~~~= Arraysize 1000 =~~~~
 
   ~~= Random Array =~~
-Heapsort  done in 0.000171 seconds and 19120 comparisons
-Insertion done in 0.000793 seconds and 257296 comparisons
-Mergesort done in 0.000232 seconds and 8713 comparisons
-Quicksort done in 0.000105 seconds and 2508 comparisons
+Heapsort  done in 0.000189 seconds and 11656 comparisons
+Insertion done in 0.000883 seconds and 242864 comparisons
+Mergesort done in 0.000249 seconds and 8689 comparisons
+Quicksort done in 0.000130 seconds and 2466 comparisons
 
   ~~= Presorted Array =~~
-Heapsort  done in 0.000174 seconds and 19120 comparisons
-Insertion done in 0.000007 seconds and 1000 comparisons
-Mergesort done in 0.000190 seconds and 5252 comparisons
-Quicksort done in 0.000871 seconds and 836 comparisons
+Heapsort  done in 0.000169 seconds and 11656 comparisons
+Insertion done in 0.000008 seconds and 1000 comparisons
+Mergesort done in 0.000217 seconds and 5262 comparisons
+Quicksort done in 0.000879 seconds and 811 comparisons
 
 
 ~~~~= Arraysize 10000 =~~~~
 
   ~~= Random Array =~~
-Heapsort  done in 0.002173 seconds and 258084 comparisons
-Insertion done in 0.081847 seconds and 24905013 comparisons
-Mergesort done in 0.002489 seconds and 120501 comparisons
-Quicksort done in 0.000989 seconds and 35914 comparisons
+Heapsort  done in 0.002117 seconds and 165995 comparisons
+Insertion done in 0.074943 seconds and 25016453 comparisons
+Mergesort done in 0.002421 seconds and 120471 comparisons
+Quicksort done in 0.001025 seconds and 35946 comparisons
 
   ~~= Presorted Array =~~
-Heapsort  done in 0.002039 seconds and 258084 comparisons
-Insertion done in 0.000067 seconds and 10000 comparisons
-Mergesort done in 0.001856 seconds and 73151 comparisons
-Quicksort done in 0.036401 seconds and 14020 comparisons
+Heapsort  done in 0.001978 seconds and 165995 comparisons
+Insertion done in 0.000043 seconds and 10000 comparisons
+Mergesort done in 0.001891 seconds and 73493 comparisons
+Quicksort done in 0.033785 seconds and 14066 comparisons
 
 
 ~~~~= Arraysize 100000 =~~~~
 
   ~~= Random Array =~~
-Heapsort  done in 0.029935 seconds and 3247772 comparisons
-Insertion done in 7.831078 seconds and 2509690044 comparisons
-Mergesort done in 0.028535 seconds and 1536058 comparisons
-Quicksort done in 0.011608 seconds and 510230 comparisons
+Heapsort  done in 0.025421 seconds and 2159924 comparisons
+Insertion done in 7.811294 seconds and 2501311994 comparisons
+Mergesort done in 0.028097 seconds and 1536161 comparisons
+Quicksort done in 0.012201 seconds and 510384 comparisons
 
   ~~= Presorted Array =~~
-Heapsort  done in 0.027648 seconds and 3247772 comparisons
-Insertion done in 0.000528 seconds and 100000 comparisons
-Mergesort done in 0.022998 seconds and 908286 comparisons
-Quicksort done in 0.749236 seconds and 282331 comparisons
+Heapsort  done in 0.028437 seconds and 2159924 comparisons
+Insertion done in 0.000440 seconds and 100000 comparisons
+Mergesort done in 0.022067 seconds and 915912 comparisons
+Quicksort done in 0.719735 seconds and 282381 comparisons
 ```
 
 
@@ -133,5 +133,9 @@ Mergesort: 991275 comparisons
 Quicksort: 297300 comparisons
 ```
 
+- Man sieht, dass die Laufzeit von dem Heapsort vergleichbar mit den Laufzeiten von Mergesort Algorithmus sind, sowohl auf Random Arrays als auch auf presortierten Arrays
+- Die Anzahl von durchgeführten Vergleichen ist allerdings viel höher als bei MergeSort. Das heißt, der Algorithmus kann mehrere Vergleichen durchführen in vergleichbaren Zeit
+- Die Anzahl von Vergleichen bleibt dabei gleich wenn es auf random arrays angewendet wird als die auf sortierten Arrays
+ 
 
 ### 2. Schreiben Sie ein Programm, mit dem Sie ein Textfile Huffman-codieren können. Welche Reduktion der Filegröße erreichen Sie damit? (Sie sollten Ihr Programm testen, indem Sie einen Text codieren, wieder dekodieren und überprüfen, ob Sie damit wieder den Auggangstext erhalten.)

@@ -85,12 +85,13 @@ int max (int *a, int n, int i, int j, int k) {
     int m = i;
     if (j < n && a[j] > a[m]) {
         m = j;
+        counter++;
     }
-    counter++;
     if (k < n && a[k] > a[m]) {
         m = k;
+        counter++;
     }
-    counter++;
+   
     return m;
 }
  
