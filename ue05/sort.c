@@ -81,44 +81,49 @@ int *qSort (int A[], int al, int ar) {
 }
 
 //HEAPSORT
-int max (int *a, int n, int i, int j, int k) {
-    int m = i;
-    if (j < n && a[j] > a[m]) {
-        m = j;
-        counter++;
-    }
-    if (k < n && a[k] > a[m]) {
-        m = k;
-        counter++;
-    }
-   
-    return m;
+int heapSize;
+
+void maxHeapify(int A[], int i){
+
+	int l = i*2+1;
+	int r = i*2+2;
+	int maximum = 0;
+	
+	if(l < heapSize && A[l] > A[i]){
+		maximum = l;
+		counter++;
+	}
+	else {
+		maximum = i;
+	}
+	
+	if(r < heapSize && A[r] > A[maximum]){
+		maximum = r;
+		counter++;
+	}
+	
+	if(maximum != i){
+		swap(A, i, maximum);
+		maxHeapify(A, maximum);
+	}
 }
- 
-void downheap (int *a, int n, int i) {
-    while (1) {
-        int j = max(a, n, i, 2 * i + 1, 2 * i + 2);
-        if (j == i) {
-            break;
-        }
-        int t = a[i];
-        a[i] = a[j];
-        a[j] = t;
-        i = j;
-    }
+
+void buildMaxHeap(int A[], int size){
+	heapSize = size;
+	for(int i = (size-1)/2; i >= 0; i--){
+		maxHeapify(A, i);
+	}
 }
- 
-void hSort (int *a, int n) {
-    int i;
-    for (i = (n - 2) / 2; i >= 0; i--) {
-        downheap(a, n, i);
-    }
-    for (i = 0; i < n; i++) {
-        int t = a[n - i - 1];
-        a[n - i - 1] = a[0];
-        a[0] = t;
-        downheap(a, n - i - 1, 0);
-    }
+
+
+int *hSort(int A[], int size){
+	buildMaxHeap(A, size);
+	for(int i = (size-1); i >= 1; i--){
+		swap(A, 0, i);
+		heapSize = heapSize - 1;
+		maxHeapify(A, 0);
+	}
+	return A;
 }
  
 
