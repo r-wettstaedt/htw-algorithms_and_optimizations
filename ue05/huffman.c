@@ -175,7 +175,7 @@ struct MinHeapNode* buildHuffmanTree(char data[], int freq[], int size)
 
 // Prints huffman codes from the root of Huffman Tree.  It uses arr[] to
 // store codes
-int codeTable[27];
+char *codeTable[27];
 void getCodes(struct MinHeapNode* root, int arr[], int top)
 {
     // Assign 0 to left edge and recur
@@ -202,23 +202,31 @@ void getCodes(struct MinHeapNode* root, int arr[], int top)
         
         //codes are saved as 1 for binary 0 and 2 for binary 1 for arithmetic purposes of saving the code
         int code = 0;
-        for(int i = 0; i < top; i++){
+        char strcode[top+1];
+        int i;
+        for(i = 0; i < top; i++){
             if(arr[i] == 0){
                 code = code*10+1;
+                strcode[i] = '0';
             }
             else if(arr[i] == 1){
                 code = code*10+2;
+                strcode[i] = '1';
             }
+            
+            
         }
+        
+        strcode[i] = '\0';
         
         //32 is ASCII for space, 97 is ASCII for 'a'
         if(letter == 32){
-            codeTable[26] = code;
-             printf("codeTable[%d]: %d\n", 26, code);
+            codeTable[26] = strcode;
+            printf("codeTable[%d]: %s\n", 26, strcode);
         }
         else{
-            codeTable[letter-97] = code;
-            printf("codeTable[%d]: %d\n", letter-97, code);
+            codeTable[letter-97] = strcode;
+            printf("codeTable[%d]: %s\n", letter-97, strcode);
         }
        
     }
@@ -338,7 +346,11 @@ int main()
     //int freq[] = {5, 9, 12, 13, 16, 45};
     
     int size = sizeof(letters)/sizeof(letters[0]);
-    HuffmanCodes(letters, freq, size);
+    
+    //  Construct Huffman Tree
+    struct MinHeapNode* root = buildHuffmanTree(letters, freq, size);
+    int arr[MAX_TREE_HT], top = 0;
+    getCodes(root, arr, top);
     
     int compress;
     char filename[20];
@@ -351,24 +363,16 @@ int main()
     scanf("%d",&compress);
 
 
-    if (compress==1){
-        printf("Compressing file %s...\n", filename);
-   		fileToCompress = fopen(filename, "r");
-    	compressedFile = fopen("compressedFile.txt","w");
-        compressFile(fileToCompress,compressedFile, codeTable);
-    }
-    else{
-        //  Construct Huffman Tree
-        struct MinHeapNode* root = buildHuffmanTree(letters, freq, size);
-        
-        // Print Huffman codes using the Huffman tree built above
-        int arr[MAX_TREE_HT], top = 0;
-        getCodes(root, arr, top);
-        
-        
-        decompressedFile = fopen("decompressedFile","w");
-        decompressFile(compressedFile,decompressedFile, root);
-    }
+//    if (compress==1){
+//        printf("Compressing file %s...\n", filename);
+//   		fileToCompress = fopen(filename, "r");
+//    	compressedFile = fopen("compressedFile.txt","w");
+//        compressFile(fileToCompress,compressedFile, codeTable);
+//    }
+//    else{
+//        decompressedFile = fopen("decompressedFile","w");
+//        decompressFile(compressedFile,decompressedFile, root);
+//    }
     
     
     return 0;
