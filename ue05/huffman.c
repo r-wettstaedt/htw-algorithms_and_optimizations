@@ -1,4 +1,5 @@
 
+
 // C program for Huffman Coding
 #include <stdio.h>
 #include <stdlib.h>
@@ -175,7 +176,8 @@ struct MinHeapNode* buildHuffmanTree(char data[], int freq[], int size)
 
 // Prints huffman codes from the root of Huffman Tree.  It uses arr[] to
 // store codes
-char *codeTable[27];
+
+long long int codeTable[27]; long long int codeTable2[27];
 void getCodes(struct MinHeapNode* root, int arr[], int top)
 {
     // Assign 0 to left edge and recur
@@ -201,36 +203,29 @@ void getCodes(struct MinHeapNode* root, int arr[], int top)
         printArr(arr, top);
         
         //codes are saved as 1 for binary 0 and 2 for binary 1 for arithmetic purposes of saving the code
-        int code = 0;
-        char strcode[top+1];
-        int i;
-        for(i = 0; i < top; i++){
+        long long int code = 0;
+        for(int i = 0; i < top; i++){
             if(arr[i] == 0){
                 code = code*10+1;
-                strcode[i] = '0';
             }
             else if(arr[i] == 1){
                 code = code*10+2;
-                strcode[i] = '1';
             }
-            
-            
         }
-        
-        strcode[i] = '\0';
         
         //32 is ASCII for space, 97 is ASCII for 'a'
         if(letter == 32){
-            codeTable[26] = strcode;
-            printf("codeTable[%d]: %s\n", 26, strcode);
+            codeTable[26] = code;
+            //printf("codeTable[%d]: %d\n", 26, code);
         }
         else{
-            codeTable[letter-97] = strcode;
-            printf("codeTable[%d]: %s\n", letter-97, strcode);
+            codeTable[letter-97] = code;
+            //printf("codeTable[%d]: %d\n", letter-97, code);
         }
-       
+        
     }
-    
+   
+   
 }
 
 // The main function that builds a Huffman Tree and print codes by traversing
@@ -239,7 +234,7 @@ void HuffmanCodes(char data[], int freq[], int size)
 {
     //  Construct Huffman Tree
     struct MinHeapNode* root = buildHuffmanTree(data, freq, size);
-   
+    
     // Print Huffman codes using the Huffman tree built above
     int arr[MAX_TREE_HT], top = 0;
     getCodes(root, arr, top);
@@ -247,50 +242,51 @@ void HuffmanCodes(char data[], int freq[], int size)
 
 
 /*function to compress the input*/
-void compressFile(FILE *input, FILE *output, int codeTable[]){
+void compressFile(FILE *input, FILE *output, long long int codeTable[]){
     /*function to compress the input*/
-        char bit, c, x = 0;
-        int n,length,bitsLeft = 8;
-        int originalBits = 0, compressedBits = 0;
-        
-        //32 is ASCII space, 97 is ASCII a
-        while ((c=fgetc(input))!=10){
-            originalBits++;
-            if (c==32){
-                length = len(codeTable[26]);
-                n = codeTable[26];
-            }
-            else{
-                length=len(codeTable[c-97]);
-                n = codeTable[c-97];
-            }
-            
-            while (length>0){
-                compressedBits++;
-                bit = n % 10 - 1;
-                n /= 10;
-                x = x | bit;
-                bitsLeft--;
-                length--;
-                if (bitsLeft==0){
-                    fputc(x,output);
-                    x = 0;
-                    bitsLeft = 8;
-                }
-                x = x << 1;
-            }
+    char bit, c, x = 0;
+    long long int n;
+    int length,bitsLeft = 8;
+    int originalBits = 0, compressedBits = 0;
+    
+    //32 is ASCII space, 97 is ASCII a
+    while ((c=fgetc(input))!=EOF){
+        originalBits++;
+        if (c==32){
+            length = len(codeTable[26]);
+            n = codeTable[26];
+        }
+        else{
+            length=len(codeTable[c-97]);
+            n = codeTable[c-97];
         }
         
-        if (bitsLeft!=8){
-            x = x << (bitsLeft-1);
-            fputc(x,output);
+        while (length>0){
+            compressedBits++;
+            bit = n % 10 - 1;
+            n /= 10;
+            x = x | bit;
+            bitsLeft--;
+            length--;
+            if (bitsLeft==0){
+                fputc(x,output);
+                x = 0;
+                bitsLeft = 8;
+            }
+            x = x << 1;
         }
-        
-        /*print details of compression on the screen*/
-        fprintf(stderr,"Original bits = %d\n",originalBits*8);
-        fprintf(stderr,"Compressed bits = %d\n",compressedBits);
-        fprintf(stderr,"Saved %.2f%% of memory\n",((float)compressedBits/(originalBits*8))*100);
-        
+    }
+    
+    if (bitsLeft!=8){
+        x = x << (bitsLeft-1);
+        fputc(x,output);
+    }
+    
+    /*print details of compression on the screen*/
+    fprintf(stderr,"Original bits = %d\n",originalBits*8);
+    fprintf(stderr,"Compressed bits = %d\n",compressedBits);
+    fprintf(stderr,"Saved %.2f%% of memory\n",((float)compressedBits/(originalBits*8))*100);
+    
     return;
     
 }
@@ -308,22 +304,24 @@ void decompressFile(FILE *input, FILE *output, struct MinHeapNode *root){
             c = c << 1;
             if (bit==0){
                 current = current->left;
-                if (current->data!=127){
-                    if (current->data==26)
+                if (isLeaf(current)){
+                    if (current->data==32){
                         fputc(32, output);
-                    else
-                        fputc(current->data+97,output);
+                    }
+                    else{
+                        fputc(current->data,output);
+                    }
                     current = root;
                 }
             }
             
             else{
                 current = current->right;
-                if (current->data!=127){
-                    if (current->data==26)
+                if (isLeaf(current)){
+                    if (current->data==32)
                         fputc(32, output);
                     else
-                        fputc(current->data+97,output);
+                        fputc(current->data,output);
                     current = root;
                 }
             }
@@ -331,48 +329,72 @@ void decompressFile(FILE *input, FILE *output, struct MinHeapNode *root){
     }
     
     return;
-
+    
 }
+
+/*invert the codes in codeTable2 so they can be used with mod operator by compressFile function*/
+void invertCodes(long long int codeTable[], long long int codeTable2[]){
+    int i;
+    long long int n, copy;
+    
+    for (i=0;i<27;i++){
+        n = codeTable[i];
+        copy = 0;
+        while (n>0){
+            copy = copy * 10 + n %10;
+            n /= 10;
+        }
+        codeTable2[i]=copy;
+    }
+    
+    return;
+}
+
 
 // Driver program to test above functions
 int main()
-{	
-	
+{
+    
     /* 81 = 8.1%, 128 = 12.8% and so on. The 27th frequency is the space. Source is Wikipedia */
-	int freq [27] = {81, 15, 28, 43, 128, 23, 20, 61, 71, 2, 1, 40, 24, 69, 76, 20, 1, 61, 64, 91, 28, 10, 24, 1, 20, 1, 130};
-    char letters[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '};
+    int freq [27] = {81, 15, 28, 43, 128, 23, 20, 61, 71, 2, 1, 40, 24, 69, 76, 20, 1, 61, 64, 91, 28, 10, 24, 1, 20, 1, 130};
+    char data[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '};
     
     //char letters[] = {'a', 'b', 'c', 'd', 'e', 'f'};
     //int freq[] = {5, 9, 12, 13, 16, 45};
     
-    int size = sizeof(letters)/sizeof(letters[0]);
+    int size = sizeof(data)/sizeof(data[0]);
+    //HuffmanCodes(letters, freq, size);
     
     //  Construct Huffman Tree
-    struct MinHeapNode* root = buildHuffmanTree(letters, freq, size);
+    struct MinHeapNode* tree = buildHuffmanTree(data, freq, size);
+    // Print Huffman codes using the Huffman tree built above
     int arr[MAX_TREE_HT], top = 0;
-    getCodes(root, arr, top);
+    getCodes(tree, arr, top);
     
+    invertCodes(codeTable,codeTable2);
+
+
     int compress;
     char filename[20];
-    FILE *fileToCompress, *compressedFile, *decompressedFile;
+    FILE *fileToProcess, *compressedFile, *decompressedFile;
     
     /*get input details from user*/
     printf("Type the name of the file to process:\n");
     scanf("%s",filename);
     printf("Type 1 to compress and 2 to decompress:\n");
     scanf("%d",&compress);
-
-
-//    if (compress==1){
-//        printf("Compressing file %s...\n", filename);
-//   		fileToCompress = fopen(filename, "r");
-//    	compressedFile = fopen("compressedFile.txt","w");
-//        compressFile(fileToCompress,compressedFile, codeTable);
-//    }
-//    else{
-//        decompressedFile = fopen("decompressedFile","w");
-//        decompressFile(compressedFile,decompressedFile, root);
-//    }
+    
+    
+    fileToProcess = fopen(filename, "r");
+    
+    if (compress==1){
+        compressedFile = fopen("compressedFile.txt","w");
+        compressFile(fileToProcess,compressedFile, codeTable2);
+    }
+    else{
+        decompressedFile = fopen("decompressedFile.txt","w");
+        decompressFile(fileToProcess,decompressedFile, tree);
+    }
     
     
     return 0;
