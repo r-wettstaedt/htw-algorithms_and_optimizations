@@ -175,29 +175,54 @@ struct MinHeapNode* buildHuffmanTree(char data[], int freq[], int size)
 
 // Prints huffman codes from the root of Huffman Tree.  It uses arr[] to
 // store codes
-void printCodes(struct MinHeapNode* root, int arr[], int top)
+void getCodes(struct MinHeapNode* root, int arr[], int top)
 {
+    int codeTable[27];
     // Assign 0 to left edge and recur
     if (root->left)
     {
         arr[top] = 0;
-        printCodes(root->left, arr, top + 1);
+        getCodes(root->left, arr, top + 1);
     }
     
     // Assign 1 to right edge and recur
     if (root->right)
     {
         arr[top] = 1;
-        printCodes(root->right, arr, top + 1);
+        getCodes(root->right, arr, top + 1);
     }
     
     // If this is a leaf node, then it contains one of the input
     // characters, print the character and its code from arr[]
     if (isLeaf(root))
     {
-        printf("%c: ", root->data);
+        char letter = root->data;
+        printf("%c: ", letter);
         printArr(arr, top);
+        
+        //codes are saved as 1 for binary 0 and 2 for binary 1 for arithmetic purposes of saving the code
+        int code = 0;
+        for(int i = 0; i < top; i++){
+            if(arr[i] == 0){
+                code = code*10+1;
+            }
+            else if(arr[i] == 1){
+                code = code*10+2;
+            }
+        }
+        
+        //32 is ASCII for space, 97 is ASCII for 'a'
+        if(letter == 32){
+            codeTable[26] = code;
+             printf("codeTable[%d]: %d\n", 26, code);
+        }
+        else{
+            codeTable[letter-97] = code;
+            printf("codeTable[%d]: %d\n", letter-97, code);
+        }
+       
     }
+    
 }
 
 // The main function that builds a Huffman Tree and print codes by traversing
@@ -209,12 +234,12 @@ void HuffmanCodes(char data[], int freq[], int size)
    
     // Print Huffman codes using the Huffman tree built above
     int arr[MAX_TREE_HT], top = 0;
-    printCodes(root, arr, top);
+    getCodes(root, arr, top);
 }
 
 /*function to compress the input*/
 void compressFile(FILE *input, FILE *output){
-    //TODO
+    //TODO:
     //compress file
 }
 
@@ -227,9 +252,12 @@ void decompressFile(){
 int main()
 {	
 	
-
+    /* 81 = 8.1%, 128 = 12.8% and so on. The 27th frequency is the space. Source is Wikipedia */
 	int freq [27] = {81, 15, 28, 43, 128, 23, 20, 61, 71, 2, 1, 40, 24, 69, 76, 20, 1, 61, 64, 91, 28, 10, 24, 1, 20, 1, 130};
     char letters[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '};
+    
+    //char letters[] = {'a', 'b', 'c', 'd', 'e', 'f'};
+    //int freq[] = {5, 9, 12, 13, 16, 45};
     int size = sizeof(letters)/sizeof(letters[0]);
     HuffmanCodes(letters, freq, size);
     
