@@ -7,6 +7,14 @@
 ### 2. Finden Sie natürliche Zahlen n und 1 < a < n-1, für die a^(n-1) ≡ 1 mod n gilt, wobei n aber keine Primzahl ist.
 
 ### 3. Implementieren Sie den Algorithmus von Rabin und Miller; einen Pseudocode dazu finden Sie in moodle. Testen Sie Ihre Implementierung, indem Sie diese mit der java-BigInteger-Methode isProbablePrime vergleichen. Wie viele Primzahlen < 1.000.000 findet Ihr Programm? Mit welchem Parameter k?
+```bash
+./rabin-miller
+```
+```bash
+All 1.000.000 tests passed
+Number of primes found: 78.496
+k: 64
+```
 
 ### 4. Finden Sie eine 32-bit-Zahl, die bei einem (k = 1) Durchlauf des MillerRabin-Testes nicht als zusammengesetzt erkannt wird, obwohl sie das aber ist. Wie viele Zahlen müssen dabei getestet werden?
 
