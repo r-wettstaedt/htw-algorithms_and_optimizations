@@ -1,6 +1,6 @@
 CC=cc
 CFLAGS=-Wall -g -lgmp
-ARGS=
+ARGS=2
 
 clean:
 	rm -f *.o
@@ -9,10 +9,11 @@ f: prime
 
 prime: clean
 	$(CC) $(CFLAGS) -c rabin-miller.c -o rabin-miller.o
+	$(CC) $(CFLAGS) -c main.c -o main.o
 
-	$(CC) $(CFLAGS) rabin-miller.o -o rabin-miller
+	$(CC) $(CFLAGS) rabin-miller.o main.o -o main
 
-	valgrind ./rabin-miller $(ARGS)
+	valgrind ./main $(ARGS)
 	# echo "\n==~ OUTPUT ~==\n"
 	# ./sort $(ARGS)
 	tput bel

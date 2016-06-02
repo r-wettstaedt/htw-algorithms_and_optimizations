@@ -5,10 +5,15 @@
 ### 1. Wieso kann eine natürliche Zahl n nicht pseudoprim bezüglich einer Zahl a sein, wenn ggT(a, n) ≠ 1 gilt?
 
 ### 2. Finden Sie natürliche Zahlen n und 1 < a < n-1, für die a^(n-1) ≡ 1 mod n gilt, wobei n aber keine Primzahl ist.
+```
+n:15, a:4
+4^(15 - 1) mod 15 = 1
+1 mod 15 = 1
+```
 
 ### 3. Implementieren Sie den Algorithmus von Rabin und Miller; einen Pseudocode dazu finden Sie in moodle. Testen Sie Ihre Implementierung, indem Sie diese mit der java-BigInteger-Methode isProbablePrime vergleichen. Wie viele Primzahlen < 1.000.000 findet Ihr Programm? Mit welchem Parameter k?
 ```bash
-./rabin-miller
+./main
 ```
 ```bash
 All 1.000.000 tests passed
