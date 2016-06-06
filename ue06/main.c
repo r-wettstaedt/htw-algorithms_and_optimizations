@@ -96,82 +96,84 @@ int assignment3 (int argc, char *argv[]) {
 
 
 int assignment4 (int argc, char *argv[]) {
-    bool _isComposite;
-
-    mpz_t n_start_mpz, n_mpz, n_max_mpz,
+    const int maxK = 32;
+    mpz_t n_min_mpz, n_mpz, n_max_mpz,
           max_count_mpz, count_mpz;
 
-    mpz_init_set_ui(n_start_mpz, 2);
-    mpz_init(n_mpz);
+    mpz_init_set_ui(n_min_mpz, 2);
+    mpz_init_set_ui(n_mpz, 0);
     mpz_init_set_ui(n_max_mpz, 2);
     mpz_init(max_count_mpz);
     mpz_init(count_mpz);
 
-    mpz_pow_ui(n_start_mpz, n_start_mpz, 32);
-    mpz_add_ui(n_start_mpz, n_start_mpz, 1);
-
-    mpz_set(n_mpz, n_start_mpz);
+    mpz_pow_ui(n_min_mpz, n_min_mpz, 32);
     mpz_pow_ui(n_max_mpz, n_max_mpz, 33);
 
-    while (mpz_cmp(n_mpz, n_max_mpz) < 0) {
-        _isComposite = isComposite(n_mpz);
-        if (!_isComposite) {
-            mpz_sub(max_count_mpz, n_max_mpz, n_start_mpz);
-            mpz_cdiv_q_ui(max_count_mpz, max_count_mpz, 2);
+    mpz_set(n_mpz, n_min_mpz);
+    mpz_add_ui(n_mpz, n_mpz, 1);
+    mpz_sub(max_count_mpz, n_max_mpz, n_min_mpz);
+    mpz_cdiv_q_ui(max_count_mpz, max_count_mpz, 2);
+    gmp_printf("Max count of numbers to be tested:\n(2^33 - 2^32) / 2 = %Zd\n\n", max_count_mpz);
 
-            mpz_sub(count_mpz, n_mpz, n_start_mpz);
-            mpz_cdiv_q_ui(count_mpz, count_mpz, 2);
+    while (mpz_cmp(n_mpz, n_max_mpz) < 0 && !(isPrime(n_mpz, 1) && !isPrime(n_mpz, maxK))) {
 
-            gmp_printf("Result:\n%Zd\n\n", n_mpz);
-            gmp_printf("Max count of numbers to be tested:\n%Zd\n\n", max_count_mpz);
-            gmp_printf("Count of numbers tested:\n%Zd\n", count_mpz);
-
-            printf("\n");
-            return 0;
-        }
         mpz_add_ui(n_mpz, n_mpz, 2);
+        mpz_add_ui(count_mpz, count_mpz, 1);
     }
+
+    gmp_printf("Count of numbers tested:\n%Zd\n\n", count_mpz);
+    gmp_printf("Number found:\n%Zd\n", n_mpz);
+
+    printf("\n");
     return 0;
 }
 
 
 int assignment5 (int argc, char *argv[]) {
-    bool _isPrime;
+    bool _isPrime = false;
     const int maxK = 32;
+    unsigned long seed;
+    struct timeval tv;
 
-    mpz_t n_start_mpz, n_mpz, n_max_mpz,
+    mpz_t n_min_mpz, n_mpz, n_max_mpz,
           max_count_mpz, count_mpz;
+    gmp_randstate_t state;
 
-    mpz_init_set_ui(n_start_mpz, 2);
-    mpz_init(n_mpz);
+    mpz_init_set_ui(n_min_mpz, 2);
+    mpz_init_set_ui(n_mpz, 0);
     mpz_init_set_ui(n_max_mpz, 2);
     mpz_init(max_count_mpz);
     mpz_init(count_mpz);
 
-    mpz_pow_ui(n_start_mpz, n_start_mpz, 512);
-    mpz_add_ui(n_start_mpz, n_start_mpz, 1);
-
-    mpz_set(n_mpz, n_start_mpz);
+    mpz_pow_ui(n_min_mpz, n_min_mpz, 512);
     mpz_pow_ui(n_max_mpz, n_max_mpz, 513);
+    mpz_sub(max_count_mpz, n_max_mpz, n_min_mpz);
 
-    while (mpz_cmp(n_mpz, n_max_mpz) < 0) {
-        _isPrime = isPrime(n_mpz, maxK);
-        if (_isPrime) {
-            mpz_sub(max_count_mpz, n_max_mpz, n_start_mpz);
-            mpz_cdiv_q_ui(max_count_mpz, max_count_mpz, 2);
+    gmp_printf("Max count of numbers to be tested:\n2^513 - 2^512%Zd\n\n", max_count_mpz);
 
-            mpz_sub(count_mpz, n_mpz, n_start_mpz);
-            mpz_cdiv_q_ui(count_mpz, count_mpz, 2);
+    gmp_randinit_mt(state);
+    gettimeofday(&tv, NULL);
+    seed = 1000000 * tv.tv_sec + tv.tv_usec;
+    gmp_randseed_ui(state, seed);
 
-            gmp_printf("Result:\n%Zd\n\n", n_mpz);
-            gmp_printf("Max count of numbers to be tested:\n%Zd\n\n", max_count_mpz);
-            gmp_printf("Count of numbers tested:\n%Zd\n", count_mpz);
+    while (!_isPrime) {
 
-            printf("\n");
-            return 0;
+        mpz_urandomm(n_mpz, state, n_max_mpz);
+
+        while (mpz_cmp(n_mpz, n_min_mpz) < 0) {
+            mpz_add_ui(count_mpz, count_mpz, 1);
+            mpz_urandomm(n_mpz, state, n_max_mpz);
         }
-        mpz_add_ui(n_mpz, n_mpz, 2);
+
+        _isPrime = isPrime(n_mpz, maxK);
+        mpz_add_ui(count_mpz, count_mpz, 1);
+
     }
+
+    gmp_printf("Count of numbers tested:\n%Zd\n\n", count_mpz);
+    gmp_printf("Prime number found:\n%Zd\n", n_mpz);
+
+    printf("\n");
     return 0;
 }
 

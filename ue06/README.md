@@ -3,6 +3,8 @@
     Sona Pecenakova 540607
 
 ### 1. Wieso kann eine natürliche Zahl n nicht pseudoprim bezüglich einer Zahl a sein, wenn ggT(a, n) ≠ 1 gilt?
+* weil die Definition von Primzahlen besagt, dass sie sich nicht als Produkt zweier natürlicher Zahlen, die beide größer als 1 sind, darstellen lassen
+
 
 ### 2. Finden Sie natürliche Zahlen n und 1 < a < n-1, für die a^(n-1) ≡ 1 mod n gilt, wobei n aber keine Primzahl ist.
 Implementation:
@@ -155,106 +157,109 @@ k: 64
 Implementation:
 ```c
 int assignment4 (int argc, char *argv[]) {
-    bool _isComposite;
-
-    mpz_t n_start_mpz, n_mpz, n_max_mpz,
+    const int maxK = 32;
+    mpz_t n_min_mpz, n_mpz, n_max_mpz,
           max_count_mpz, count_mpz;
 
-    mpz_init_set_ui(n_start_mpz, 2);
-    mpz_init(n_mpz);
+    mpz_init_set_ui(n_min_mpz, 2);
+    mpz_init_set_ui(n_mpz, 0);
     mpz_init_set_ui(n_max_mpz, 2);
     mpz_init(max_count_mpz);
     mpz_init(count_mpz);
 
-    mpz_pow_ui(n_start_mpz, n_start_mpz, 32);
-    mpz_add_ui(n_start_mpz, n_start_mpz, 1);
-
-    mpz_set(n_mpz, n_start_mpz);
+    mpz_pow_ui(n_min_mpz, n_min_mpz, 32);
     mpz_pow_ui(n_max_mpz, n_max_mpz, 33);
 
-    while (mpz_cmp(n_mpz, n_max_mpz) < 0) {
-        _isComposite = isComposite(n_mpz);
-        if (!_isComposite) {
-            mpz_sub(max_count_mpz, n_max_mpz, n_start_mpz);
-            mpz_cdiv_q_ui(max_count_mpz, max_count_mpz, 2);
+    mpz_set(n_mpz, n_min_mpz);
+    mpz_add_ui(n_mpz, n_mpz, 1);
+    mpz_sub(max_count_mpz, n_max_mpz, n_min_mpz);
+    mpz_cdiv_q_ui(max_count_mpz, max_count_mpz, 2);
+    gmp_printf("Max count of numbers to be tested:\n%Zd\n\n", max_count_mpz);
 
-            mpz_sub(count_mpz, n_mpz, n_start_mpz);
-            mpz_cdiv_q_ui(count_mpz, count_mpz, 2);
+    while (mpz_cmp(n_mpz, n_max_mpz) < 0 && !(isPrime(n_mpz, 1) && !isPrime(n_mpz, maxK))) {
 
-            gmp_printf("Result:\n%Zd\n\n", n_mpz);
-            gmp_printf("Max count of numbers to be tested:\n%Zd\n\n", max_count_mpz);
-            gmp_printf("Count of numbers tested:\n%Zd\n", count_mpz);
-
-            printf("\n");
-            return 0;
-        }
         mpz_add_ui(n_mpz, n_mpz, 2);
+        mpz_add_ui(count_mpz, count_mpz, 1);
     }
+
+    gmp_printf("Count of numbers tested:\n%Zd\n\n", count_mpz);
+    gmp_printf("Number found:\n%Zd\n", n_mpz);
+
+    printf("\n");
     return 0;
 }
 ```
 Output:
 ```bash
-Result:
-4294967311
-
 Max count of numbers to be tested:
-2147483648
+(2^33 - 2^32) / 2 = 2.147.483.648
 
 Count of numbers tested:
-7
+501.793
+
+Number found:
+4.295.970.883
 ```
 
 ### 5. Finden Sie mit Ihrer Implementierung des Rabin-Miller-Algorithmus eine Zufalls(pseudo)primzahl mit 512 bit. Wie viele Zahlen müssen dabei getestet werden?
 Implementation:
 ```c
 int assignment5 (int argc, char *argv[]) {
-    bool _isPrime;
+    bool _isPrime = false;
     const int maxK = 32;
+    unsigned long seed;
+    struct timeval tv;
 
-    mpz_t n_start_mpz, n_mpz, n_max_mpz,
+    mpz_t n_min_mpz, n_mpz, n_max_mpz,
           max_count_mpz, count_mpz;
+    gmp_randstate_t state;
 
-    mpz_init_set_ui(n_start_mpz, 2);
-    mpz_init(n_mpz);
+    mpz_init_set_ui(n_min_mpz, 2);
+    mpz_init_set_ui(n_mpz, 0);
     mpz_init_set_ui(n_max_mpz, 2);
     mpz_init(max_count_mpz);
     mpz_init(count_mpz);
 
-    mpz_pow_ui(n_start_mpz, n_start_mpz, 512);
-    mpz_add_ui(n_start_mpz, n_start_mpz, 1);
-
-    mpz_set(n_mpz, n_start_mpz);
+    mpz_pow_ui(n_min_mpz, n_min_mpz, 512);
     mpz_pow_ui(n_max_mpz, n_max_mpz, 513);
+    mpz_sub(max_count_mpz, n_max_mpz, n_min_mpz);
 
-    while (mpz_cmp(n_mpz, n_max_mpz) < 0) {
-        _isPrime = isPrime(n_mpz, maxK);
-        if (_isPrime) {
-            mpz_sub(max_count_mpz, n_max_mpz, n_start_mpz);
-            mpz_cdiv_q_ui(max_count_mpz, max_count_mpz, 2);
+    gmp_printf("Max count of numbers to be tested:\n%Zd\n\n", max_count_mpz);
 
-            mpz_sub(count_mpz, n_mpz, n_start_mpz);
-            mpz_cdiv_q_ui(count_mpz, count_mpz, 2);
+    gmp_randinit_mt(state);
+    gettimeofday(&tv, NULL);
+    seed = 1000000 * tv.tv_sec + tv.tv_usec;
+    gmp_randseed_ui(state, seed);
 
-            gmp_printf("Result:\n%Zd\n\n", n_mpz);
-            gmp_printf("Max count of numbers to be tested:\n%Zd\n\n", max_count_mpz);
-            gmp_printf("Count of numbers tested:\n%Zd\n", count_mpz);
+    while (!_isPrime) {
 
-            printf("\n");
-            return 0;
+        mpz_urandomm(n_mpz, state, n_max_mpz);
+
+        while (mpz_cmp(n_mpz, n_min_mpz) < 0) {
+            mpz_add_ui(count_mpz, count_mpz, 1);
+            mpz_urandomm(n_mpz, state, n_max_mpz);
         }
-        mpz_add_ui(n_mpz, n_mpz, 2);
+
+        _isPrime = isPrime(n_mpz, maxK);
+        mpz_add_ui(count_mpz, count_mpz, 1);
+
     }
+
+    gmp_printf("Count of numbers tested:\n%Zd\n\n", count_mpz);
+    gmp_printf("Found prime number:\n%Zd\n", n_mpz);
+
+    printf("\n");
+    return 0;
 }
 ```
 Output:
 ```bash
-Result:
-13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084171
-
 Max count of numbers to be tested:
-6703903964971298549787012499102923063739682910296196688861780721860882015036773488400937149083451713845015929093243025426876941405973284973216824503042048
+2^513 - 2^512 = 13407807929942597099574024998205846127479365820592393377723561443721764030073546976801874298166903427690031858186486050853753882811946569946433649006084096
 
 Count of numbers tested:
-37
+301
+
+Found prime number:
+22217638908594694483827437169228357357275109749930845558291885487544431946190055624329602279515026752088967757871798254880285545055060125654636895449509671
 ```
