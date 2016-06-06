@@ -6,9 +6,9 @@
 
 #include "rabin-miller.h"
 
-#define RED     "\x1B[31m"
-#define GREEN   "\x1B[32m"
-#define RESET   "\x1B[0m"
+#define COLOR_RED     "\x1B[31m"
+#define COLOR_GREEN   "\x1B[32m"
+#define COLOR_RESET   "\x1B[0m"
 
 
 int assignment2 (int argc, char *argv[]) {
@@ -35,10 +35,6 @@ int assignment2 (int argc, char *argv[]) {
                 printf("\n");
                 return 0;
             }
-
-            // if (mpz_cmp_ui(a_mpz, 1) == 0) {
-            //     printf("n:%d a:%d\n", n, a);
-            // }
         }
     }
 
@@ -72,23 +68,24 @@ int assignment3 (int argc, char *argv[]) {
     for (int n = 5; n < numberOfTests; n+=2) {
         mpz_set_ui(n_mpz, n);
         _isPrime = isPrime(n_mpz, maxK);
+        if (_isPrime) numberOfPrimes++;
+
+        /* Check against gmp's isPrime implementation */
         _isPrimeProb = mpz_probab_prime_p(n_mpz, maxK);
         __isPrime = _isPrimeProb == 2;
 
-        if (_isPrime) numberOfPrimes++;
         if (_isPrime != __isPrime) {
-            printf("%s%d: %d == %d%s\n", RED, n, _isPrime, _isPrimeProb, RESET);
+            printf("%s%d: %d == %d%s\n", COLOR_RED, n, _isPrime, _isPrimeProb, COLOR_RESET);
             _isDivergent = true;
         }
     }
-    printf("\n");
 
     gettimeofday(&tv, NULL);
     unsigned long end = 1000000 * tv.tv_sec + tv.tv_usec;
     printf("Done in %lus (%lums)\n", (end - start) / 1000000, (end - start) / 1000);
 
     if (!_isDivergent) {
-        printf("%sAll %d tests passed%s\n", GREEN, numberOfTests, RESET);
+        printf("%sAll %d tests passed%s\n", COLOR_GREEN, numberOfTests, COLOR_RESET);
         printf("Number of primes found: %d\n", numberOfPrimes);
         printf("k: %d\n", maxK);
     }
@@ -99,22 +96,80 @@ int assignment3 (int argc, char *argv[]) {
 
 
 int assignment4 (int argc, char *argv[]) {
-    bool _isPrime;
-    const int maxK = 1;
+    bool _isComposite;
 
-    mpz_t n_mpz;
-    mpz_t n_max_mpz;
+    mpz_t n_start_mpz, n_mpz, n_max_mpz,
+          max_count_mpz, count_mpz;
 
-    mpz_init_set_ui(n_mpz, 2);
+    mpz_init_set_ui(n_start_mpz, 2);
+    mpz_init(n_mpz);
     mpz_init_set_ui(n_max_mpz, 2);
+    mpz_init(max_count_mpz);
+    mpz_init(count_mpz);
 
-    mpz_pow_ui(n_mpz, n_mpz, 32);
-    mpz_sub_ui(n_mpz, n_mpz, 1);
+    mpz_pow_ui(n_start_mpz, n_start_mpz, 32);
+    mpz_add_ui(n_start_mpz, n_start_mpz, 1);
+
+    mpz_set(n_mpz, n_start_mpz);
     mpz_pow_ui(n_max_mpz, n_max_mpz, 33);
 
     while (mpz_cmp(n_mpz, n_max_mpz) < 0) {
+        _isComposite = isComposite(n_mpz);
+        if (!_isComposite) {
+            mpz_sub(max_count_mpz, n_max_mpz, n_start_mpz);
+            mpz_cdiv_q_ui(max_count_mpz, max_count_mpz, 2);
+
+            mpz_sub(count_mpz, n_mpz, n_start_mpz);
+            mpz_cdiv_q_ui(count_mpz, count_mpz, 2);
+
+            gmp_printf("Result:\n%Zd\n\n", n_mpz);
+            gmp_printf("Max count of numbers to be tested:\n%Zd\n\n", max_count_mpz);
+            gmp_printf("Count of numbers tested:\n%Zd\n", count_mpz);
+
+            printf("\n");
+            return 0;
+        }
+        mpz_add_ui(n_mpz, n_mpz, 2);
+    }
+    return 0;
+}
+
+
+int assignment5 (int argc, char *argv[]) {
+    bool _isPrime;
+    const int maxK = 32;
+
+    mpz_t n_start_mpz, n_mpz, n_max_mpz,
+          max_count_mpz, count_mpz;
+
+    mpz_init_set_ui(n_start_mpz, 2);
+    mpz_init(n_mpz);
+    mpz_init_set_ui(n_max_mpz, 2);
+    mpz_init(max_count_mpz);
+    mpz_init(count_mpz);
+
+    mpz_pow_ui(n_start_mpz, n_start_mpz, 512);
+    mpz_add_ui(n_start_mpz, n_start_mpz, 1);
+
+    mpz_set(n_mpz, n_start_mpz);
+    mpz_pow_ui(n_max_mpz, n_max_mpz, 513);
+
+    while (mpz_cmp(n_mpz, n_max_mpz) < 0) {
         _isPrime = isPrime(n_mpz, maxK);
-        // gmp_printf("%Zd is prime %s\n", n_mpz, _isPrime ? "true" : "false");
+        if (_isPrime) {
+            mpz_sub(max_count_mpz, n_max_mpz, n_start_mpz);
+            mpz_cdiv_q_ui(max_count_mpz, max_count_mpz, 2);
+
+            mpz_sub(count_mpz, n_mpz, n_start_mpz);
+            mpz_cdiv_q_ui(count_mpz, count_mpz, 2);
+
+            gmp_printf("Result:\n%Zd\n\n", n_mpz);
+            gmp_printf("Max count of numbers to be tested:\n%Zd\n\n", max_count_mpz);
+            gmp_printf("Count of numbers tested:\n%Zd\n", count_mpz);
+
+            printf("\n");
+            return 0;
+        }
         mpz_add_ui(n_mpz, n_mpz, 2);
     }
     return 0;
@@ -139,6 +194,10 @@ int main (int argc, char *argv[]) {
         case 4:
             printf("Launching assignment4\n\n");
             return assignment4(argc, argv);
+            break;
+        case 5:
+            printf("Launching assignment5\n\n");
+            return assignment5(argc, argv);
             break;
         default:
             printf("Assignment not found\n");

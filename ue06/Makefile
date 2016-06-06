@@ -1,6 +1,6 @@
 CC=cc
 CFLAGS=-Wall -g -lgmp
-ARGS=2
+ARGS=4
 
 clean:
 	rm -f *.o
