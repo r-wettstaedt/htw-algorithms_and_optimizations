@@ -1,13 +1,16 @@
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 
 public class Main {
 	
 	public static char[] data = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '};
+//	public static char[] data = {'a', 'b', 'c', 'd', 'e', ' '};
 	
 	
 	private static int[] getFrequencies(File file) throws IOException {
@@ -15,8 +18,10 @@ public class Main {
 		InputStream input = new BufferedInputStream(new FileInputStream(file));
 		try {
 			int c;
+			int counter = 0;
 			while ((c = input.read()) != -1) {
 				char ch = (char)c;
+				counter++;
 				for(int i = 0; i < data.length; i++){
 					if(data[i] == ch){
 						freq[i]++;
@@ -30,7 +35,29 @@ public class Main {
 		return freq;
 	}
 	
+	public void compressFile(File inputFile, File outputFile, HashMap<Character, String> codeTable) throws IOException{
+		InputStream inStream = new BufferedInputStream(new FileInputStream(inputFile));
+		try {
+			int c;
+			while ((c = inStream.read()) != -1) {
+				char ch = (char)c;
+				String code = codeTable.get(ch);
+				
+				
+				
+				for(int i = 0; i < data.length; i++){
+					if(data[i] == ch){
+					}
+				}
+			}
+		} finally {
+			inStream.close();
+		}
+		
+	}
+	
 	public static void main(String[] args) throws IOException{
+		//get letter frequencies from file
 		File file = new File("/Users/sonynka/Documents/HTW/Algorithms/Huffman2/input.txt");
 		int[] freq = getFrequencies(file);
 		int size = freq.length;
@@ -39,9 +66,13 @@ public class Main {
 		minHeap.buildMinHeap();
 		
 		MinHeapNode root = minHeap.buildHuffmanTree();
+		
+		//get codes
 		int[] arr = new int[100];
 		int top = 0;
 		minHeap.printCodes(root, arr, top);
+		HashMap<Character, String> codeTable = new HashMap<Character, String>();
+		minHeap.getCodes(root, arr, top, codeTable);
 		
 		System.out.println("done");
 		

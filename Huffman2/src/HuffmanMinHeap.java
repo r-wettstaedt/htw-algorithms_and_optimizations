@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 
 public class HuffmanMinHeap {
 	
@@ -70,18 +72,26 @@ public class HuffmanMinHeap {
 		return min;
 	}
 	
+	private void heapIncreaseKey(int idx, MinHeapNode node){
+		if(node.freq < nodeArray[idx].freq){
+			System.out.println("New key less than actual key");
+		}
+		
+		nodeArray[idx] = node;
+		
+		while(idx > 1 && nodeArray[getParent(idx)].freq > nodeArray[idx].freq){
+			swapNodes(idx, getParent(idx));
+			idx = getParent(idx);
+		}
+	}
+	
 	
 	private void insertNode(MinHeapNode node){
 		
 		heapSize++;
-		int idx = heapSize - 1;
+		nodeArray[heapSize-1] = new MinHeapNode();
 		
-		while(idx > 0 && node.freq < nodeArray[(idx - 1)/2].freq){
-			nodeArray[idx] = nodeArray[(idx - 1)/2];
-			idx = (idx - 1)/2;
-		}
-		nodeArray[heapSize-1] = node;
-		
+		heapIncreaseKey(heapSize-1, node);
 	}
 	
 	public MinHeapNode buildHuffmanTree(){
@@ -102,6 +112,33 @@ public class HuffmanMinHeap {
 	
 	private boolean isLeaf(MinHeapNode node){
 		return (node.left == null && node.right == null);
+	}
+	
+	
+	public void getCodes(MinHeapNode root, int arr[], int top, HashMap<Character, String> codeTable){
+		
+		if(root.left != null){
+			arr[top] = 0;
+			getCodes(root.left, arr, top + 1, codeTable);
+		}
+		
+		if(root.right != null){
+			arr[top] = 1;
+			getCodes(root.right, arr, top + 1, codeTable);
+		}
+		
+		if(isLeaf(root)){
+			System.out.print(root.letter + ": ");
+			printArr(arr, top);
+			
+			String code = "";
+			for(int i = 0; i < top; i++){
+				code += Integer.toString(arr[i]);
+			}
+			
+			codeTable.put(root.letter, code);
+		}
+		
 	}
 	
 	public void printCodes(MinHeapNode root, int arr[], int top){
