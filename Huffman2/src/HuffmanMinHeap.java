@@ -141,24 +141,7 @@ public class HuffmanMinHeap {
 		
 	}
 	
-	public void printCodes(MinHeapNode root, int arr[], int top){
-		
-		if(root.left != null){
-			arr[top] = 0;
-			printCodes(root.left, arr, top + 1);
-		}
-		
-		if(root.right != null){
-			arr[top] = 1;
-			printCodes(root.right, arr, top + 1);
-		}
-		
-		if(isLeaf(root)){
-			System.out.print(root.letter + ": ");
-			printArr(arr, top);
-		}
-		
-	}
+
 	
 	private void printArr(int arr[], int n){
 		for(int i = 0; i < n; i++){
