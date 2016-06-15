@@ -41,7 +41,7 @@ public class Main {
 		return freq;
 	}
 	
-	public static void compressFile(File inputFile, File outputFile, HashMap<Character, String> codeTable) throws IOException{
+	public static int compressFile(File inputFile, File outputFile, HashMap<Character, String> codeTable) throws IOException{
 		InputStream inStream = new BufferedInputStream(new FileInputStream(inputFile));
 		try {
 			String outputString = "";
@@ -53,9 +53,9 @@ public class Main {
 			}
 			
 			//fill the last unfilled spots of the last bit with zeros
-			int bitsLeftToFill = outputString.length()%8;
+			int bitsLeftToFill = 8 - outputString.length()%8;
 			if(bitsLeftToFill > 0){
-				for(int i = 0; i < 8-bitsLeftToFill; i++){
+				for(int i = 0; i < bitsLeftToFill; i++){
 					outputString += "0";
 				}
 			}
@@ -76,13 +76,15 @@ public class Main {
 			fos.close();
 			
 			System.out.println("converted");
+			return bitsLeftToFill;
+			
 		} finally {
 			inStream.close();
 		}
 		
 	}
 	
-	public static void decompressFile(File toDecompress, File decompressed, HashMap<Character, String> codeTable) throws IOException{
+	public static void decompressFile(File toDecompress, File decompressed, HashMap<Character, String> codeTable, int finalZeros) throws IOException{
 		HashMap<String, Character> revCodeTable = revertCodeTable(codeTable);
 		
 		byte[] fileBytes = Files.readAllBytes(toDecompress.toPath());
@@ -96,14 +98,22 @@ public class Main {
 				byte by = fileBytes[i];
 				String byteStr = Integer.toBinaryString(by & 0xFF);
 				if(byteStr.length() < 8){
-					//get the most significant bit - zero (sign)
-					byteStr = "0" + byteStr;
+					int bitsToComplete = 8 - byteStr.length();
+					while(bitsToComplete > 0){
+						//get the zeros on the most left bits
+						byteStr = "0" + byteStr;
+						bitsToComplete--;
+					}
 				}
 				
 				code += byteStr;
 				
 			}
 			
+			//do not decompress the last zeros used to fill the byte
+			if(finalZeros > 0){
+				code = code.substring(0, code.length() - finalZeros);
+			}
 				
 			for(int i = 0; i < code.length(); i++){
 				char c = code.charAt(i);
@@ -154,15 +164,14 @@ public class Main {
 		//get codes
 		int[] arr = new int[100];
 		int top = 0;
-		minHeap.printCodes(root, arr, top);
 		HashMap<Character, String> codeTable = new HashMap<Character, String>();
 		minHeap.getCodes(root, arr, top, codeTable);
 		
 		File compressedFile = new File("compressedFile");
-		compressFile(originalFile, compressedFile, codeTable);
+		int finalZeros = compressFile(originalFile, compressedFile, codeTable);
 		
 		File decompressedFile = new File("decompressedFile.txt");
-		decompressFile(compressedFile, decompressedFile, codeTable);
+		decompressFile(compressedFile, decompressedFile, codeTable, finalZeros);
 		
 		
 		System.out.println("done");
