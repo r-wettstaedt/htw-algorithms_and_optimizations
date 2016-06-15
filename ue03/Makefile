@@ -1,14 +1,8 @@
-CC=cc
-CFLAGS=-Wall -g -lgmp
-ARGS=5 20
+# define the C compiler to use
+CC = gcc
 
-clean:
-	rm -f exp
-	rm -f modexp
+# define any compile-time flags
+CFLAGS = -Wall -lgmp -g
 
-exp: clean
-	$(CC) $(CFLAGS) exp.c -o exp
-	valgrind ./exp $(ARGS)
-	echo "\n==~ OUTPUT ~==\n"
-	./exp $(ARGS)
-	tput bel
+
+
