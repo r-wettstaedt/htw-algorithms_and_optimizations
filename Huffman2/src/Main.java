@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 public class Main {
 	
-	public static char[] data = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '};
-//	public static char[] data = {'a', 'b', 'c', 'd', 'e', ' '};
+	//public static char[] data = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '};
+	public static char[] data = {'a', 'b', 'c', 'd', 'e', 'f'};
 	
 	
 	private static int[] getFrequencies(File file) throws IOException {
@@ -50,12 +50,22 @@ public class Main {
 			
 			//fill the last unfilled spots of the last bit with zeros
 			int bitsLeftToFill = outputString.length()%8;
-			for(int i = 0; i < bitsLeftToFill; i++){
-				outputString += "0";
+			if(bitsLeftToFill > 0){
+				for(int i = 0; i < 8-bitsLeftToFill; i++){
+					outputString += "0";
+				}
 			}
 			
-			byte[] b = new BigInteger(outputString, 2).toByteArray();
 			
+			BigInteger big = new BigInteger(outputString, 2);
+			byte[] b = big.toByteArray();
+			
+			//drop the most significant bit - no need for sign
+			if (b[0] == 0) {
+			    byte[] tmp = new byte[b.length - 1];
+			    System.arraycopy(b, 1, tmp, 0, tmp.length);
+			    b = tmp;
+			}
 			
 			FileOutputStream fos = new FileOutputStream(outputFile);
 			fos.write(b);
@@ -75,7 +85,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException{
 		//get letter frequencies from file
-		File originalFile = new File("/Users/sonynka/Documents/HTW/Algorithms/Huffman2/input.txt");
+		File originalFile = new File("input2.txt");
 		int[] freq = getFrequencies(originalFile);
 		int size = freq.length;
 		
@@ -91,10 +101,10 @@ public class Main {
 		HashMap<Character, String> codeTable = new HashMap<Character, String>();
 		minHeap.getCodes(root, arr, top, codeTable);
 		
-		File compressedFile = new File("/Users/sonynka/Documents/HTW/Algorithms/Huffman2/output");
+		File compressedFile = new File("output");
 		compressFile(originalFile, compressedFile, codeTable);
 		
-		File decompressedFile = new File("/Users/sonynka/Documents/HTW/Algorithms/Huffman2/decompressedFile.txt");
+		File decompressedFile = new File("decompressedFile.txt");
 		decompressFile(compressedFile, decompressedFile, codeTable);
 		
 		
