@@ -11,11 +11,12 @@
 
 
 int main (int argc, char *argv[]) {
-    for (int i = 0; i < numberOfNodes; i++) {
-        for (int j = 0; j < numberOfNodes; j++) {
-            printShortestPath(i, j);
-        }
-    }
+    printShortestPath(0, 4);
+    // for (int i = 0; i < numberOfNodes; i++) {
+    //     for (int j = 0; j < numberOfNodes; j++) {
+    //         printShortestPath(i, j);
+    //     }
+    // }
 
     return 0;
 }
