@@ -128,7 +128,7 @@ public class HuffmanMinHeap {
 		}
 		
 		if(isLeaf(root)){
-			System.out.print(root.letter + ": ");
+			System.out.print(root.letter + " (" + root.freq + ") : ");
 			printArr(arr, top);
 			
 			String code = "";

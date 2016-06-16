@@ -1,12 +1,10 @@
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -16,7 +14,6 @@ import java.util.Set;
 public class Main {
 	
 	public static char[] data = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '};
-//	public static char[] data = {'a', 'b', 'c', 'd', 'e', 'f'};
 	
 	
 	private static int[] getFrequencies(File file) throws IOException {
@@ -24,10 +21,8 @@ public class Main {
 		InputStream input = new BufferedInputStream(new FileInputStream(file));
 		try {
 			int c;
-			int counter = 0;
 			while ((c = input.read()) != -1) {
 				char ch = (char)c;
-				counter++;
 				for(int i = 0; i < data.length; i++){
 					if(data[i] == ch){
 						freq[i]++;
@@ -52,7 +47,7 @@ public class Main {
 				outputString += code;
 			}
 			
-			//fill the last unfilled spots of the last bit with zeros
+			//fill the last unfilled spots of the last byte with zeros
 			int bitsLeftToFill = 8 - outputString.length()%8;
 			if(bitsLeftToFill > 0){
 				for(int i = 0; i < bitsLeftToFill; i++){
@@ -60,7 +55,7 @@ public class Main {
 				}
 			}
 			
-			
+			//convert the string to bitearray
 			BigInteger big = new BigInteger(outputString, 2);
 			byte[] b = big.toByteArray();
 			
@@ -75,7 +70,7 @@ public class Main {
 			fos.write(b);
 			fos.close();
 			
-			System.out.println("converted");
+			System.out.println("File compressed");
 			return bitsLeftToFill;
 			
 		} finally {
@@ -85,8 +80,10 @@ public class Main {
 	}
 	
 	public static void decompressFile(File toDecompress, File decompressed, HashMap<Character, String> codeTable, int finalZeros) throws IOException{
+		//revert the codetables keys and values
 		HashMap<String, Character> revCodeTable = revertCodeTable(codeTable);
 		
+		//read all bytes from file
 		byte[] fileBytes = Files.readAllBytes(toDecompress.toPath());
 		InputStream inStream = new BufferedInputStream(new FileInputStream(toDecompress));
 		try {
@@ -97,6 +94,7 @@ public class Main {
 			for(int i = 0; i < fileBytes.length; i++){
 				byte by = fileBytes[i];
 				String byteStr = Integer.toBinaryString(by & 0xFF);
+				
 				if(byteStr.length() < 8){
 					int bitsToComplete = 8 - byteStr.length();
 					while(bitsToComplete > 0){
@@ -128,7 +126,7 @@ public class Main {
 			out.write(outputString);
 			out.close();
 			
-			System.out.println("converted");
+			System.out.println("File decompressed");
 		} finally {
 			inStream.close();
 		}
@@ -136,6 +134,7 @@ public class Main {
 		
 	}
 	
+	//Revert the keys and values in the codetable
 	public static HashMap<String, Character> revertCodeTable(HashMap<Character, String> origCodeTable){
 		HashMap<String, Character> revCodeTable = new HashMap<String, Character>();
 		
@@ -167,14 +166,13 @@ public class Main {
 		HashMap<Character, String> codeTable = new HashMap<Character, String>();
 		minHeap.getCodes(root, arr, top, codeTable);
 		
+		//compress and decompress
 		File compressedFile = new File("compressedFile");
 		int finalZeros = compressFile(originalFile, compressedFile, codeTable);
 		
 		File decompressedFile = new File("decompressedFile.txt");
 		decompressFile(compressedFile, decompressedFile, codeTable, finalZeros);
 		
-		
-		System.out.println("done");
 		
 	}
 	
