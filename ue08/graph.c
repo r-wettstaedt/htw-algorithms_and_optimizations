@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <limits.h>
+#include <stdbool.h>
 
 #include "graph.h"
 #include "heap.h"
@@ -17,39 +19,93 @@ const int matrix[numberOfNodes * numberOfNodes] = {
     /*     s   t   x   y   z      */
 };
 int dist[numberOfNodes];
-int prev[numberOfNodes];
-struct heap* Q;
+struct heapNode *prev[numberOfNodes];
+struct heap *Q;
+
+int getWeight (const int u, const int v) {
+    return matrix[u * numberOfNodes + v];
+}
+
+struct heap *getNeighbors (struct heap *Q, struct heapNode *u) {
+    int n, u_pos;
+    struct heapNode **neighbors;
+    struct heapNode *neighbor;
+
+    for (int v = n = 0; v < numberOfNodes; v++) {
+        u_pos = u->index * numberOfNodes + v;
+        neighbor = findInHeap(Q, v);
+
+        if (matrix[u_pos] > 0 && neighbor != NULL) {
+            n++;
+        }
+    }
+
+    if (n == 0) return NULL;
+    neighbors = malloc(n * sizeof(struct heapNode *));
+
+    for (int v = n = 0; v < numberOfNodes; v++) {
+        u_pos = u->index * numberOfNodes + v;
+        neighbor = findInHeap(Q, v);
+
+        if (matrix[u_pos] > 0 && neighbor != NULL) {
+            neighbors[n++] = neighbor;
+        }
+    }
+
+    struct heap *h = malloc(sizeof(struct heap));
+    h->size = n;
+    h->nodes = neighbors;
+
+    return h;
+}
 
 void dijkstra (const int s) {
     Q = newheap(numberOfNodes);
 
     for (int v = 0; v < numberOfNodes; v++) {
-        dist[v] = INT_MAX;
-        prev[v] = -1;
+        dist[v] = INT_MAX / 2;
+        prev[v] = NULL;
 
         struct heapNode* n = newNode(v, dist[v]);
         Q->nodes[v] = n;
         Q->size++;
-        heapify(Q, v);
-        printf("v: %d | size: %d | %d\n", v, Q->size, Q->nodes[v]->dist);
     }
 
     dist[s] = 0;
-    buildHeap(Q, numberOfNodes);
+    Q->nodes[s]->dist = 0;
+
+    buildHeap(Q);
 
     while (Q->size > 0) {
-        printf("while %d > 0\n", Q->size);
         struct heapNode *u = extractMin(Q);
-        struct heapNode *neighbors[2] = {u->left, u->right};
-        printf("%d\n", u->left->dist);
-        for (int v = 0; v < 2; v++) {
-            // printf("v: %d | size: %d ", v, neighbors[v]->dist);
-            // dist[v] > dist[v] +
+        struct heap *neighbors = getNeighbors(Q, u);
+
+        if (neighbors == NULL) continue;
+
+        for (int _v = 0; _v < neighbors->size; _v++) {
+            struct heapNode *v = neighbors->nodes[_v];
+
+            const int alt = dist[u->index] + getWeight(u->index, v->index);
+
+            if (dist[v->index] > alt) {
+                dist[v->index] = alt;
+                prev[v->index] = u;
+
+                v->dist = alt;
+                buildHeap(Q);
+            }
         }
     }
 }
 
-void printShortestPath(const int a, const int b) {
-    printf("%c -> %c\n", map[a], map[b]);
-    dijkstra(a);
+void printShortestPath(const int s) {
+    dijkstra(s);
+    for (int i = 0; i < numberOfNodes; i++) {
+        if (prev[i] == NULL) continue;
+
+        printf("distance (%c -> %c) is %d", map[s], map[i], dist[i]);
+        if (prev[i]->index != s)
+            printf(" via %c", map[prev[i]->index]);
+        printf("\n");
+    }
 }

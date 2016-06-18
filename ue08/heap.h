@@ -4,7 +4,6 @@
 struct heapNode {
     unsigned index;
     int dist;
-    struct heapNode *left, *right;
 };
 
 struct heap {
@@ -15,9 +14,13 @@ struct heap {
 
 struct heap* newheap(const unsigned capacity);
 struct heapNode* newNode(const unsigned index, const int dist);
-struct heapNode* extractMin(struct heap* h);
 
-void buildHeap(struct heap *h, const int heapSize);
+struct heapNode* extractMin(struct heap* h);
+void buildHeap(struct heap *h);
 void heapify(struct heap *h, int i);
+
+struct heapNode *findInHeap(struct heap *h, const int index);
+
+void printHeap (struct heap *h, char *prefix);
 
 #endif // HEAP_H_

@@ -2,6 +2,6 @@
 #define GRAPH_H_
 
 extern const int numberOfNodes;
-void printShortestPath(const int a, const int b);
+void printShortestPath(const int s);
 
 #endif // GRAPH_H_

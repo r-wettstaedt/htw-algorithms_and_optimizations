@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS=-Wall -g
+CFLAGS=-std=c11 -Wall -g
 ARGS=4
 
 clean:
