@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include <time.h>
 
 int i,j,m,n,c[20][20];
 char x[20],y[20],b[20][20];
@@ -52,7 +53,15 @@ int main()
         scanf("%s",y);
         printf("\nThe Longest Common Subsequence is ");
         lcs();
+		printf("\n");
+
+   		clock_t t;
+		t = clock();
+
         print(m,n);
-        printf("\n");
+
+        t = clock() - t;
+		double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    	printf("\nPrint method took %f seconds to execute \n", time_taken);
         return 0;
 }
