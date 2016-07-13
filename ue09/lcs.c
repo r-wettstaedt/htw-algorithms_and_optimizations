@@ -5,21 +5,21 @@
 int i,j,m,n,c[20][20];
 char x[20],y[20],b[20][20];
 
-void print(int i,int j)
+void lcsPrint(int i,int j)
 {
     if(i==0 || j==0)
     	return;
     if(b[i][j]=='p'){
-        print(i-1,j-1);
+        lcsPrint(i-1,j-1);
         printf("%c",x[i-1]);
     }
     else if(b[i][j]=='o')
-        print(i-1,j);
+        lcsPrint(i-1,j);
     else
-        print(i,j-1);
+        lcsPrint(i,j-1);
 }
 
-void lcs()
+void lcsLength()
 {
     m=strlen(x);
 	n=strlen(y);
@@ -52,13 +52,13 @@ int main()
         scanf("%s",x);
         scanf("%s",y);
         printf("\nThe Longest Common Subsequence is ");
-        lcs();
+        lcsLength();
 		printf("\n");
 
    		clock_t t;
 		t = clock();
 
-        print(m,n);
+        lcsPrint(m,n);
 
         t = clock() - t;
 		double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
